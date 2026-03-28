@@ -1,0 +1,93 @@
+Divorce_calculator/
+│
+├── app/                         # Next.js App Router
+│   ├── layout.tsx
+│   ├── page.tsx                 # Landing Page
+│
+│   ├── run/                     # Input flow
+│   │   └── page.tsx             # Form page
+│
+│   ├── results/                 # Paywall page
+│   │   └── page.tsx
+│
+│   ├── dashboard/               # Protected area
+│   │   └── page.tsx
+│
+│   ├── account/
+│   │   └── page.tsx
+│
+│   ├── api/                     # Backend routes
+│   │
+│   │   ├── calculate/
+│   │   │   └── route.ts         # Core logic API
+│   │
+│   │   ├── checkout/
+│   │   │   └── route.ts         # Stripe checkout session
+│   │
+│   │   ├── webhook/
+│   │   │   └── route.ts         # Stripe webhook
+│   │
+│   │   ├── scenarios/
+│   │   │   └── route.ts         # Save / fetch scenarios
+│   │
+│   │   └── user/
+│   │       └── route.ts         # User profile
+│
+│
+├── components/                  # Reusable UI
+│   ├── ui/                      # Buttons, inputs
+│   ├── dashboard/
+│   │   ├── RealityScore.tsx
+│   │   ├── IncomeBreakdown.tsx
+│   │   ├── ScenarioCard.tsx
+│   │
+│   ├── paywall/
+│   │   ├── BlurOverlay.tsx
+│   │   └── UnlockCTA.tsx
+│
+│   └── form/
+│       ├── InputField.tsx
+│       └── ExpenseInputs.tsx
+│
+│
+├── lib/                         # Core logic (VERY IMPORTANT)
+│   ├── calculator.ts            # All calculations
+│   ├── stripe.ts                # Stripe config
+│   ├── db.ts                    # Database connection
+│   ├── auth.ts                  # Auth helpers
+│   └── utils.ts
+│
+│
+├── models/ (if using MongoDB)
+│   ├── User.ts
+│   ├── Scenario.ts
+│   └── Payment.ts
+│
+├── prisma/ (if using PostgreSQL)
+│   └── schema.prisma
+│
+│
+├── hooks/
+│   ├── useUser.ts
+│   ├── useScenario.ts
+│
+│
+├── context/
+│   └── AppContext.tsx           # Global state
+│
+│
+├── middleware.ts                # Protect dashboard routes
+│
+│
+├── styles/
+│   └── globals.css
+│
+│
+├── public/
+│   └── assets/
+│
+│
+├── .env.local                   # Secrets
+│
+├── package.json
+└── tsconfig.json
