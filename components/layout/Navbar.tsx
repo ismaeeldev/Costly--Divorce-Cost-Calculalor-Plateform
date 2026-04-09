@@ -65,11 +65,19 @@ export function Navbar() {
             )}
           </div>
 
-          <Button asChild className="bg-[#111111] text-white hover:bg-zinc-800 rounded-[14px] px-4 md:px-6 h-10 md:h-11 font-black text-[10px] md:text-xs uppercase tracking-widest shadow-lg shadow-black/5 transition-all active:scale-95 group">
+          {/* Desktop CTA */}
+          <Button asChild className="hidden sm:flex bg-[#111111] text-white hover:bg-zinc-800 rounded-[14px] px-6 h-11 font-black text-xs uppercase tracking-widest shadow-lg shadow-black/5 transition-all active:scale-95 group">
             <Link href="/run" className="flex items-center gap-2">
-              <span className="hidden sm:inline">Run My Numbers</span>
-              <span className="sm:hidden">Run</span>
+              Run My Numbers
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </Button>
+
+          {/* Mobile CTA - Updated to Pricing per user request */}
+          <Button asChild className="sm:hidden bg-[#111111] text-white hover:bg-zinc-800 rounded-[14px] px-4 h-10 font-black text-[10px] uppercase tracking-widest shadow-lg shadow-black/5 transition-all active:scale-95 group">
+            <Link href="/paywall" className="flex items-center gap-2">
+              Pricing
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </Button>
         </div>

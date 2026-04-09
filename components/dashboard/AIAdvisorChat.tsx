@@ -124,10 +124,10 @@ export function AIAdvisorChat({ currentModel }: AIAdvisorChatProps) {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-200px)] min-h-[600px] max-w-4xl mx-auto w-full bg-white rounded-[2.5rem] border border-zinc-100 shadow-2xl overflow-hidden">
+    <div className="flex flex-col h-[calc(100vh-140px)] lg:h-[calc(100vh-200px)] lg:min-h-[600px] max-w-4xl mx-auto w-full bg-white rounded-[2rem] lg:rounded-[2.5rem] border border-zinc-100 lg:shadow-2xl overflow-hidden shadow-lg lg:mt-0">
       
-      {/* FIXED HEADER */}
-      <div className="p-5 border-b border-zinc-100 bg-[#111] text-white flex items-center justify-between shrink-0">
+      {/* FIXED HEADER - Premium Gradient */}
+      <div className="p-5 border-b border-zinc-100 bg-gradient-to-r from-[#111] to-[#222] text-white flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
             <BrainCircuit className="w-5 h-5 text-emerald-500" />
@@ -146,89 +146,93 @@ export function AIAdvisorChat({ currentModel }: AIAdvisorChatProps) {
         </div>
       </div>
 
-      {/* MESSAGES (INDEPENDENT SCROLL AREA) */}
-      <div 
-        ref={scrollRef}
-        className="flex-1 overflow-y-auto p-6 space-y-6 bg-zinc-50/30 no-scrollbar scroll-smooth"
-      >
-        <AnimatePresence initial={false}>
-          {messages.map((m, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className={cn(
-                "flex gap-4 max-w-[90%]",
-                m.role === "user" ? "ml-auto flex-row-reverse" : ""
-              )}
-            >
-              <div className={cn(
-                "w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-1 shadow-sm transition-transform active:scale-90",
-                m.role === "user" ? "bg-[#111] text-white" : "bg-white border border-zinc-100 text-emerald-500"
-              )}>
-                {m.role === "user" ? <User className="w-4 h-4" /> : <BrainCircuit className="w-4 h-4" />}
-              </div>
-              <div className={cn(
-                "p-4 rounded-2xl text-sm leading-relaxed relative",
-                m.role === "user" 
-                  ? "bg-[#111] text-white rounded-tr-none shadow-zinc-200/50" 
-                  : "bg-white border border-zinc-100 text-[#111] shadow-sm rounded-tl-none"
-              )}>
-                <div className="prose prose-sm prose-zinc max-w-none prose-p:leading-relaxed prose-pre:bg-zinc-900 prose-pre:text-white">
-                  <ReactMarkdown>
-                    {m.content}
-                  </ReactMarkdown>
+      {/* MESSAGES AREA - Unique Background Decoration */}
+      <div className="relative flex-1 overflow-hidden flex flex-col">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/4 -right-20 w-64 h-64 bg-emerald-50 rounded-full blur-[100px] -z-10 opacity-60" />
+        <div className="absolute bottom-1/4 -left-20 w-64 h-64 bg-zinc-100 rounded-full blur-[100px] -z-10 opacity-60" />
+
+        <div 
+          ref={scrollRef}
+          className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6 bg-transparent no-scrollbar scroll-smooth relative z-10"
+        >
+          <AnimatePresence initial={false}>
+            {messages.map((m, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className={cn(
+                  "flex gap-3 lg:gap-4 max-w-[95%] lg:max-w-[90%]",
+                  m.role === "user" ? "ml-auto flex-row-reverse" : ""
+                )}
+              >
+                <div className={cn(
+                  "w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-1 shadow-sm transition-transform active:scale-90",
+                  m.role === "user" ? "bg-[#111] text-white" : "bg-white border border-zinc-100 text-emerald-500"
+                )}>
+                  {m.role === "user" ? <User className="w-4 h-4" /> : <BrainCircuit className="w-4 h-4" />}
                 </div>
-              </div>
-            </motion.div>
-          ))}
-          
-          {/* DYNAMIC THINKING/TOOL INDICATOR */}
-          {(isLoading || currentTool) && (
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex gap-4 items-start"
-            >
-              <div className="w-8 h-8 rounded-xl bg-white border border-zinc-100 flex items-center justify-center shrink-0">
-                <Loader2 className="w-4 h-4 text-emerald-500 animate-spin" />
-              </div>
-              <div className="flex flex-col gap-2">
-                {currentTool && (
-                  <motion.div 
-                    initial={{ opacity: 0, x: -10 }} 
-                    animate={{ opacity: 1, x: 0 }}
-                    className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-100 rounded-full"
-                  >
-                    <div className="flex gap-1">
-                      <div className="w-1 h-1 bg-emerald-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                      <div className="w-1 h-1 bg-emerald-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                      <div className="w-1 h-1 bg-emerald-500 rounded-full animate-bounce" />
-                    </div>
-                    <span className="text-[10px] font-black uppercase text-emerald-600 tracking-wider">
-                      {currentTool}
-                    </span>
-                  </motion.div>
-                )}
-                
-                {!messages[messages.length - 1].content && !currentTool && (
-                  <div className="p-4 bg-white border border-zinc-100 rounded-2xl rounded-tl-none flex gap-1">
-                    <div className="w-1.5 h-1.5 bg-zinc-300 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                    <div className="w-1.5 h-1.5 bg-zinc-300 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                    <div className="w-1.5 h-1.5 bg-zinc-300 rounded-full animate-bounce" />
+                <div className={cn(
+                  "p-3 lg:p-4 rounded-2xl text-sm leading-relaxed relative",
+                  m.role === "user" 
+                    ? "bg-[#111] text-white rounded-tr-none shadow-zinc-200/50" 
+                    : "bg-white border border-zinc-100 text-[#111] shadow-sm rounded-tl-none"
+                )}>
+                  <div className="prose prose-sm prose-zinc max-w-none prose-p:leading-relaxed prose-pre:bg-zinc-900 prose-pre:text-white">
+                    <ReactMarkdown>
+                      {m.content}
+                    </ReactMarkdown>
                   </div>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                </div>
+              </motion.div>
+            ))}
+            
+            {(isLoading || currentTool) && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex gap-4 items-start"
+              >
+                <div className="w-8 h-8 rounded-xl bg-white border border-zinc-100 flex items-center justify-center shrink-0">
+                  <Loader2 className="w-4 h-4 text-emerald-500 animate-spin" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  {currentTool && (
+                    <motion.div 
+                      initial={{ opacity: 0, x: -10 }} 
+                      animate={{ opacity: 1, x: 0 }}
+                      className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-100 rounded-full"
+                    >
+                      <div className="flex gap-1">
+                        <div className="w-1 h-1 bg-emerald-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                        <div className="w-1 h-1 bg-emerald-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                        <div className="w-1 h-1 bg-emerald-500 rounded-full animate-bounce" />
+                      </div>
+                      <span className="text-[10px] font-black uppercase text-emerald-600 tracking-wider">
+                        {currentTool}
+                      </span>
+                    </motion.div>
+                  )}
+                  
+                  {!messages[messages.length - 1].content && !currentTool && (
+                    <div className="p-4 bg-white border border-zinc-100 rounded-2xl rounded-tl-none flex gap-1">
+                      <div className="w-1.5 h-1.5 bg-zinc-300 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                      <div className="w-1.5 h-1.5 bg-zinc-300 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                      <div className="w-1.5 h-1.5 bg-zinc-300 rounded-full animate-bounce" />
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* FIXED FOOTER (QUICK PROMPTS + INPUT) */}
       <div className="shrink-0 bg-white border-t border-zinc-100">
-        {/* QUICK PROMPTS */}
-        <div className="px-6 py-3 border-b border-zinc-50 overflow-x-auto no-scrollbar whitespace-nowrap flex gap-2">
+        <div className="px-4 lg:px-6 py-3 border-b border-zinc-50 overflow-x-auto no-scrollbar whitespace-nowrap flex gap-2">
           {quickPrompts.map((p, i) => (
             <button
               key={i}
@@ -240,8 +244,7 @@ export function AIAdvisorChat({ currentModel }: AIAdvisorChatProps) {
           ))}
         </div>
 
-        {/* INPUT FORM */}
-        <div className="p-6 pt-4">
+        <div className="p-4 lg:p-6 pt-4">
           <form onSubmit={handleSubmit} className="flex gap-3">
             <div className="flex-1 relative group">
                <input

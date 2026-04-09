@@ -38,8 +38,10 @@ export function Sidebar({
   activeTab,
   setActiveTab,
   userName,
-  userEmail
-}: SidebarProps) {
+  userEmail,
+  isOpen,
+  setIsOpen
+}: SidebarProps & { isOpen?: boolean; setIsOpen?: (open: boolean) => void }) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState<string | null>(null);
 
@@ -112,7 +114,18 @@ export function Sidebar({
   const menuItems = allItems.filter(item => !isCore || !item.hideForCore);
 
   return (
-    <div className="w-72 h-full bg-white border-r border-zinc-100 flex flex-col py-8 px-6 overflow-hidden">
+    <div className={cn(
+      "fixed inset-y-0 left-0 z-50 w-72 h-full bg-white border-r border-zinc-100 flex flex-col py-8 px-6 overflow-hidden transition-transform duration-300 lg:static lg:translate-x-0",
+      isOpen ? "translate-x-0" : "-translate-x-full"
+    )}>
+      {/* Mobile Close Button */}
+      <button 
+        onClick={() => setIsOpen?.(false)}
+        className="lg:hidden absolute top-4 right-4 p-2 text-zinc-400 hover:text-black hover:bg-zinc-50 rounded-xl"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+
       <div className="mb-8 flex justify-center group transition-all duration-300">
         <Link href="/" className="inline-block transition-transform duration-500 group-hover:scale-110">
           <Image

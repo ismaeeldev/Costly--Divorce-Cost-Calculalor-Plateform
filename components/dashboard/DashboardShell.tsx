@@ -34,11 +34,17 @@ export function DashboardShell({
   initialScenarioName,
   canSaveScenarios
 }: DashboardShellProps) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(isCore ? "analysis" : "estimate");
   const [currentModel, setCurrentModel] = useState<CalculationInput>(initialState);
   const [scenarios, setScenarios] = useState<any[]>([]);
   const [selectedScenarioId, setSelectedScenarioId] = useState<string>("");
   const [isLoadingScenarios, setIsLoadingScenarios] = useState(false);
+
+  // Close sidebar on tab change (mobile behavior)
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [activeTab]);
 
   // Fetch scenarios for comparison view
   useEffect(() => {
@@ -95,7 +101,15 @@ export function DashboardShell({
   const isComparisonBench = activeTab === "compare";
 
   return (
-    <div className="flex h-screen bg-zinc-50 overflow-hidden">
+    <div className="flex h-screen bg-zinc-50 overflow-hidden relative">
+      
+      {/* Mobile Backdrop */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
 
       {/* Sidebar Navigation - Hidden during Full-Page Comparison */}
       {!isComparisonBench && (
@@ -107,14 +121,32 @@ export function DashboardShell({
           setActiveTab={setActiveTab}
           userName={userName}
           userEmail={userEmail}
+          isOpen={isSidebarOpen}
+          setIsOpen={setIsSidebarOpen}
         />
       )}
 
       {/* Main Content Area */}
       <main className={cn(
         "flex-1 overflow-y-auto relative transition-all duration-300",
-        isComparisonBench ? "p-0" : (activeTab === "advisor" ? "p-4 pt-2" : "p-8")
+        isComparisonBench ? "p-0" : (activeTab === "advisor" ? "p-4 pt-2" : "p-4 md:p-8")
       )}>
+        
+        {/* Mobile Top Bar (Only visible when sidebar is collapsed/mobile) */}
+        {!isComparisonBench && (
+          <div className="lg:hidden flex items-center justify-between mb-4 sticky top-0 z-30 bg-zinc-50/80 backdrop-blur-md py-4">
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="p-2 bg-white border border-zinc-200 rounded-xl shadow-sm text-zinc-600 active:scale-90 transition-transform"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+            <div className="flex items-center gap-2">
+               <img src="/costly-logo.png" alt="Costly" className="h-6 w-auto" />
+            </div>
+            <div className="w-10" /> {/* Spacer */}
+          </div>
+        )}
         <div className={cn(
           "mx-auto transition-all",
           isComparisonBench ? "max-w-none" : (activeTab === "advisor" ? "max-w-7xl" : "max-w-6xl")
@@ -139,7 +171,7 @@ export function DashboardShell({
                 </div>
 
                 {/* Status Badge */}
-                <div className="flex items-center gap-4 bg-white p-3 rounded-2xl border border-zinc-100 shadow-sm">
+                <div className="hidden md:flex items-center gap-4 bg-white p-3 rounded-2xl border border-zinc-100 shadow-sm">
                   <div className="flex flex-col text-right">
                     <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Analysis Status</span>
                     <span className="text-xs font-bold text-[#16A34A] uppercase tracking-widest">Active & Secure</span>

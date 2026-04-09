@@ -214,20 +214,20 @@ export function InteractiveDashboard({
    }
 
    return (
-      <div className="flex flex-col gap-10 pb-20">
+      <div className="flex flex-col gap-6 lg:gap-10 pb-20 px-4 lg:px-0">
 
          {/* 1. MODELING HEADER */}
 
          <div className="grid lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-8 space-y-6">
 
-               <SlideUp yOffset={10} className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 shadow-[0_8px_40px_rgba(0,0,0,0.03)]">
-                  <div className="flex flex-col md:flex-row justify-between gap-6 mb-10">
+               <SlideUp yOffset={10} className="bg-white rounded-[2rem] lg:rounded-[2.5rem] border border-zinc-100 p-6 lg:p-8 shadow-[0_8px_40px_rgba(0,0,0,0.03)]">
+                  <div className="flex flex-col lg:flex-row justify-between gap-6 mb-10">
                      <div>
                         <h2 className="text-3xl font-black text-[#111111] tracking-tight">Interactive Modeling</h2>
                         <p className="text-zinc-500 font-medium">Fine-tune your financial future.</p>
                      </div>
-                     <div className="flex flex-col gap-3 min-w-[300px]">
+                     <div className="flex flex-col gap-3 w-full lg:min-w-[300px]">
                         <div className="bg-zinc-50 p-2 rounded-2xl border border-zinc-100 flex items-center gap-3">
                            <Input
                               value={scenarioName}
@@ -312,7 +312,7 @@ export function InteractiveDashboard({
                   </div>
                </SlideUp>
 
-               <SlideUp yOffset={10} delay={0.1} className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 shadow-[0_8px_40px_rgba(0,0,0,0.03)]">
+               <SlideUp yOffset={10} delay={0.1} className="bg-white rounded-[2rem] lg:rounded-[2.5rem] border border-zinc-100 p-6 lg:p-8 shadow-[0_8px_40px_rgba(0,0,0,0.03)]">
                   <div className="flex items-center gap-2 mb-8">
                      <Calculator className="w-4 h-4 text-zinc-300" />
                      <h4 className="text-[10px] uppercase font-black tracking-widest text-zinc-400">Monthly Obligations Breakdown</h4>
@@ -346,7 +346,7 @@ export function InteractiveDashboard({
                <SlideUp
                   yOffset={10}
                   delay={0.2}
-                  className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 shadow-[0_8px_40px_rgba(0,0,0,0.03)]"
+                  className="bg-white rounded-[2rem] lg:rounded-[2.5rem] border border-zinc-100 p-6 lg:p-8 shadow-[0_8px_40px_rgba(0,0,0,0.03)]"
                >
                   <div className="flex items-center gap-2 mb-8">
                      <LayoutGrid className="w-4 h-4 text-zinc-300" />
@@ -370,7 +370,7 @@ export function InteractiveDashboard({
 
                   {/* ADD-ON CONTENT AREA */}
                   {activeAddonTab && (
-                     <div className="p-8 bg-zinc-50/50 rounded-[2rem] border border-zinc-100 mb-10 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                     <div className="p-6 lg:p-8 bg-zinc-50/50 rounded-[1.5rem] lg:rounded-[2rem] border border-zinc-100 mb-10 animate-in fade-in slide-in-from-bottom-2 duration-300">
                         {activeAddonTab === "ASSET_SPLIT" && (
                            <div className="grid md:grid-cols-3 gap-8">
                               <div className="space-y-2">
@@ -454,8 +454,8 @@ export function InteractiveDashboard({
             </div>
 
             {/* 2. STICKY SCORE SIDEBAR */}
-            {/* 2. RIGHT PANEL (FIXED HEIGHT + NO SCROLL) */}
-            <div className="lg:col-span-4 lg:sticky lg:top-6 h-[calc(100vh-40px)] flex flex-col gap-4 pb-10">
+            {/* 2. RIGHT PANEL (FIXED HEIGHT + NO SCROLL ON DESKTOP) */}
+            <div className="lg:col-span-4 lg:sticky lg:top-6 lg:h-[calc(100vh-40px)] flex flex-col gap-4 pb-10">
 
                {/* ============================= */}
                {/* TOP: REALITY SCORE (REDUCED) */}

@@ -298,9 +298,9 @@ export function ScenarioLibrary() {
   };
 
   return (
-    <div className="flex flex-col h-full space-y-6">
+    <div className="flex flex-col h-full space-y-6 px-4 lg:px-0 pb-20">
       {/* HEADER & CONTROLS */}
-      <div className="bg-white rounded-[2rem] border border-zinc-100 p-6 flex flex-col md:flex-row justify-between items-center gap-4 shadow-[0_8px_40px_rgba(0,0,0,0.03)]">
+      <div className="bg-white rounded-[1.5rem] lg:rounded-[2rem] border border-zinc-100 p-4 lg:p-6 flex flex-col md:flex-row justify-between items-center gap-4 shadow-[0_8px_40px_rgba(0,0,0,0.03)]">
         <div className="relative w-full md:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
           <Input
@@ -432,7 +432,7 @@ export function ScenarioLibrary() {
                       "relative rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col cursor-pointer border-t-4",
                       realityColor.border
                     )}>
-                      <div className="p-5 flex flex-col flex-1 gap-4">
+                      <div className="p-4 lg:p-5 flex flex-col flex-1 gap-4">
                         {/* Header Section */}
                         <div className="flex justify-between items-start gap-3">
                           <div className="space-y-1.5 flex-1 min-w-0">
@@ -559,7 +559,7 @@ export function ScenarioLibrary() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="bg-white rounded-2xl sm:rounded-[2rem] border border-zinc-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] overflow-hidden hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.08)] transition-shadow duration-300"
+              className="bg-white rounded-[1.5rem] lg:rounded-[2rem] border border-zinc-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] overflow-hidden hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.08)] transition-shadow duration-300"
             >
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm whitespace-nowrap">

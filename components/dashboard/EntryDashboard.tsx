@@ -105,11 +105,11 @@ export function EntryDashboard({ userName, isCore }: { userName: string; isCore:
   const formatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
   return (
-    <div className="grid lg:grid-cols-12 gap-8 items-start">
+    <div className="grid lg:grid-cols-12 gap-8 items-start px-4 lg:px-0 pb-20">
 
       {/* Left: Deep Data Input (The Engine) */}
       <div className="lg:col-span-7 space-y-8">
-        <section className="bg-white rounded-3xl p-8 border border-zinc-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+        <section className="bg-white rounded-[2rem] lg:rounded-3xl p-6 lg:p-8 border border-zinc-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
           <div className="flex items-center gap-3 mb-8">
             <TrendingUp className="w-5 h-5 text-[#111111]" />
             <h3 className="text-xl font-black text-[#111111]">Detailed Financial Parameters</h3>
@@ -117,7 +117,7 @@ export function EntryDashboard({ userName, isCore }: { userName: string; isCore:
 
           <div className="space-y-10">
             {/* Income Section */}
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <Label className="text-xs font-black uppercase tracking-widest text-zinc-400">Monthly Income (Own)</Label>
                 <div className="relative">
@@ -161,7 +161,7 @@ export function EntryDashboard({ userName, isCore }: { userName: string; isCore:
             <div className="pt-6 border-t border-zinc-50 space-y-6">
               <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#16A34A]">Unlocked Detailed Expenses</p>
 
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <Home className="w-3.5 h-3.5 text-zinc-300" />
@@ -256,7 +256,7 @@ export function EntryDashboard({ userName, isCore }: { userName: string; isCore:
       <div className="lg:col-span-5 space-y-6">
 
         {/* Expanded Summary Card */}
-        <section className="bg-[#111111] text-white rounded-[2.5rem] p-8 md:p-10 shadow-2xl relative overflow-hidden">
+        <section className="bg-[#111111] text-white rounded-[2rem] lg:rounded-[2.5rem] p-6 lg:p-10 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/20 blur-[60px] rounded-full -mr-16 -mt-16" />
 
           <div className="mb-10">
