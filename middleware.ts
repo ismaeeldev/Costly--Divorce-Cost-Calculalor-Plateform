@@ -1,16 +1,21 @@
-import { withAuth } from "next-auth/middleware";
+import { getToken } from "next-auth/jwt";
+import { NextRequest, NextResponse } from "next/server";
+import { requireEntryAccess } from "@/lib/access";
 
-// Provide a basic setup, currently not protecting anything specifically
-export default withAuth({
-  pages: {
-    signIn: "/login",
-  },
-});
+export default async function middleware(req: NextRequest) {
+  const token = await getToken({ req });
+
+  if (!token) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  if (!requireEntryAccess(token as any)) {
+    return NextResponse.redirect(new URL("/paywall", req.url));
+  }
+
+  return NextResponse.next();
+}
 
 export const config = {
-  matcher: [
-    // Add paths here to protect them
-    // "/dashboard/:path*",
-    // "/profile/:path*",
-  ],
+  matcher: ["/dashboard/:path*"],
 };

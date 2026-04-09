@@ -1,0 +1,309 @@
+You are a senior SaaS backend engineer.
+
+IMPORTANT:
+This is a REAL SaaS product with STRICT business rules.
+DO NOT simplify logic.
+DO NOT ignore access control.
+
+Use Prisma + Next.js App Router + Stripe.
+
+--------------------------------------------------
+
+EXISTING SYSTEM:
+- Prisma schema already implemented (User, Payment, Scenario, Addon, StripeEvent)
+- Stripe webhook already exists
+- Payment records are being saved
+
+YOUR TASK:
+Implement FULL ACCESS CONTROL LOGIC based on product flow.
+
+--------------------------------------------------
+
+PRODUCT RULES (CRITICAL — MUST FOLLOW)
+
+1. FREE PREVIEW (Top Funnel)
+
+Goal: Low friction entry
+
+User Inputs:
+
+Annual income
+Custody %
+Monthly expenses
+
+Output (STRICT LIMIT):
+
+✅ ONLY: Estimated monthly child support
+
+Restrictions:
+
+❌ No net income
+❌ No breakdown
+❌ No risk level
+❌ No scenarios
+❌ No saving
+
+👉 Keep this fast, single screen
+
+--------------------------------------------------
+PAYWALL (Dual Option — IMPORTANT)
+
+After preview, show TWO options (side-by-side):
+
+🟢 Option 1 (Primary / Default)
+$19 — Quick Review
+
+Unlock:
+
+Basic net income after support
+Slightly more breakdown
+Expanded summary
+
+Restrictions:
+
+❌ No dashboard
+❌ No risk level
+❌ No scenarios
+❌ No AI
+🔵 Option 2 (High Intent Users)
+$127 — Full Unlock (CORE PRODUCT)
+
+Unlock:
+
+✅ Full dashboard
+✅ Full financial breakdown
+✅ Net income (complete)
+✅ Risk level (red/yellow/green)
+✅ All calculations
+✅ Scenario functionality
+
+
+2. $19 PRODUCT (ENTRY)
+
+When productType = ENTRY:
+
+- user.entryPurchased = true
+- user.accessType = "ENTRY"
+
+ALLOW:
+- Basic net income
+- Slight breakdown
+
+BLOCK:
+- Dashboard
+- Scenarios
+- Reality score
+- Subscription
+
+--------------------------------------------------
+
+3. $127 PRODUCT (CORE)
+
+When productType = CORE:
+
+- user.hasFullAccess = true
+- user.accessType = "CORE"
+- user.canUseSubscription = true
+
+ALLOW:
+- Dashboard
+- Full breakdown
+- Reality score
+- Scenario system
+
+--------------------------------------------------
+
+4. UPGRADE RULE (VERY IMPORTANT)
+🔺 3. UPGRADE LOGIC (CRITICAL RULES)
+If user buys $19:
+❌ Cannot access dashboard
+❌ Cannot subscribe
+✅ Must upgrade to $127
+
+👉 Show upsell:
+
+“Unlock full analysis & scenarios”
+
+IF user.entryPurchased = true AND NOT hasFullAccess:
+
+- BLOCK dashboard
+- BLOCK scenarios
+- SHOW upgrade CTA
+
+DO NOT allow bypass.
+
+--------------------------------------------------
+
+5. ADD-ONS
+🧩 4. ADD-ONS
+
+Only visible AFTER $127
+
+Can buy anytime after
+Appears inside dashboard
+Integrates with main system
+
+Only allow purchase IF:
+- user.hasFullAccess = true
+
+On ADDON purchase:
+
+Update flags:
+
+ASSET_SPLIT → user.assetSplit = true  
+RETIREMENT → user.retirementImpact = true  
+VA_DISABILITY → user.vaDisability = true  
+HOUSING → user.housingScenario = true  
+
+--------------------------------------------------
+
+6. SUBSCRIPTION ($19/month)
+STRICT RULE:
+
+👉 Only available AFTER $127 purchase
+
+Unlock:
+
+Save scenarios
+Edit/re-run scenarios
+Unlimited testing
+AI Scenario Advisor
+
+ALLOW ONLY IF:
+- user.hasFullAccess = true
+
+On successful subscription:
+
+- user.accessType = "SUBSCRIPTION"
+- user.subscriptionStatus = "active"
+- user.hasAIAdvisor = true
+
+--------------------------------------------------
+
+7. SUBSCRIPTION CANCEL / EXPIRE
+
+When subscription inactive:
+
+- user.subscriptionStatus = "inactive"
+- user.hasAIAdvisor = false
+
+DO NOT remove:
+- CORE access
+- Add-ons
+
+--------------------------------------------------
+
+8. SCENARIO ACCESS CONTROL
+
+IF user.accessType === "ENTRY":
+→ BLOCK
+
+IF user.hasFullAccess === true:
+→ ALLOW base scenarios
+
+IF user.subscriptionStatus === "active":
+→ ALLOW:
+   - Save scenarios
+   - Edit scenarios
+   - Unlimited runs
+   - AI advisor
+
+--------------------------------------------------
+
+9. DASHBOARD ACCESS RULE
+
+ALLOW ONLY IF:
+- user.hasFullAccess === true
+
+Otherwise:
+→ redirect to paywall
+
+--------------------------------------------------
+
+10. AI ADVISOR ACCESS
+
+ALLOW ONLY IF:
+- user.subscriptionStatus === "active"
+
+Else:
+→ show locked state
+
+--------------------------------------------------
+
+11. WEBHOOK UPDATE LOGIC
+
+Inside Stripe webhook:
+
+CASE productType:
+
+ENTRY:
+- set entryPurchased = true
+
+CORE:
+- set hasFullAccess = true
+- set canUseSubscription = true
+
+SUBSCRIPTION:
+- set subscriptionStatus = "active"
+- set hasAIAdvisor = true
+
+ADDON:
+- update respective flags
+
+--------------------------------------------------
+
+12. MIDDLEWARE / GUARDS (IMPORTANT)
+
+Create helper functions:
+
+- requireCoreAccess(user)
+- requireSubscription(user)
+- requireAddon(user, type)
+
+These should:
+- return boolean OR throw error
+
+--------------------------------------------------
+
+13. FRONTEND FLAGS
+
+Return user access in session:
+
+{
+  accessType,
+  hasFullAccess,
+  entryPurchased,
+  subscriptionStatus,
+  hasAIAdvisor,
+  addons: {
+    assetSplit,
+    retirementImpact,
+    vaDisability,
+    housingScenario
+  }
+}
+
+--------------------------------------------------
+
+14. DO NOT:
+
+- Do NOT merge ENTRY into CORE
+- Do NOT allow subscription before CORE
+- Do NOT expose dashboard for ENTRY users
+- Do NOT trust frontend flags
+
+--------------------------------------------------
+
+OUTPUT:
+
+- Updated webhook logic (only access-related part)
+- Access control helper functions
+- Example protected API route
+- Example dashboard guard logic
+
+GOAL:
+
+Enforce business logic EXACTLY as defined.
+
+No loopholes.
+Production-ready.

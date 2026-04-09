@@ -11,19 +11,32 @@ datasource db {
 // USER
 // =====================
 model User {
-  id       String  @id @default(uuid())
-  name     String
-  email    String  @unique
-  password String?
+  id               String    @id @default(uuid())
+  name             String?
+  email            String    @unique
+  password         String?
+  resetToken       String?
+  resetTokenExpiry DateTime?
 
   // Access Control
-  hasFullAccess  Boolean @default(false) // $127 unlock
-  entryPurchased Boolean @default(false) // $19 product
+  accessType         String  @default("NONE") // NONE | ENTRY | CORE | SUBSCRIPTION
+  hasFullAccess      Boolean @default(false) // $127 unlock
+  entryPurchased     Boolean @default(false) // $19 product
+  canUseSubscription Boolean @default(false)
+  hasAIAdvisor       Boolean @default(false)
 
   // Subscription
+  subscriptionId     String?
   subscriptionStatus String?
-  stripeCustomerId   String?
-  stripeSubId        String?
+
+  stripeCustomerId String? @unique
+  stripeSubId      String?
+
+  // Add-on flags (separate tracking)
+  assetSplit       Boolean @default(false) // ASSET_SPLIT
+  retirementImpact Boolean @default(false) // RETIREMENT
+  vaDisability     Boolean @default(false) // VA_DISABILITY
+  housingScenario  Boolean @default(false) // HOUSING
 
   // Relations
   addons    Addon[]
@@ -61,6 +74,12 @@ model Scenario {
   savings    Float?
   retirement Float?
   homeEquity Float?
+
+  // PREMIUM ADD-ONS (STORED AS JSON)
+  assetSplit       Json?
+  retirementImpact Json?
+  vaDisability     Json?
+  housingScenario  Json?
 
   // RESULT DATA (STORE SNAPSHOT)
   netIncome        Float
@@ -104,25 +123,27 @@ enum AddonType {
 // PAYMENTS
 // =====================
 model Payment {
-  id     String  @id @default(uuid())
-  userId String?
+  id String @id @default(uuid())
 
-  amount   Float
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  stripeSessionId String  @unique
+  stripePaymentId String?
+  stripePriceId   String?
+
+  amount   Int
   currency String @default("usd")
 
+  // ENTRY | CORE | ADDON | SUBSCRIPTION
   productType ProductType
-  stripeId    String      @unique
-
-  status String // succeeded, pending, failed
 
   createdAt DateTime @default(now())
-
-  user User? @relation(fields: [userId], references: [id])
 }
 
 enum ProductType {
   ENTRY // $19
-  FULL_UNLOCK // $127
+  CORE // $127
   ADDON
   SUBSCRIPTION
 }

@@ -1,0 +1,65 @@
+[
+    {
+        "id": "balanced",
+        "label": "Balanced Settlement",
+        "description": "Equal custody with moderate expenses",
+        "data": {
+            "incomeOwn": 6000,
+            "incomeSpouse": 5000,
+            "childrenCount": 2,
+            "custodyPercentage": 50,
+            "mortgage": 1500,
+            "childcare": 600,
+            "school": 400,
+            "activities": 300,
+            "utilities": 300,
+            "insurance": 250,
+            "otherExpenses": 400,
+            "savings": 500,
+            "retirement": 300,
+            "homeEquity": 20000
+        }
+    },
+    {
+        "id": "high_support",
+        "label": "High Support Burden",
+        "description": "Low custody, higher support pressure",
+        "data": {
+            "incomeOwn": 5500,
+            "incomeSpouse": 6500,
+            "childrenCount": 2,
+            "custodyPercentage": 30,
+            "mortgage": 1400,
+            "childcare": 800,
+            "school": 500,
+            "activities": 400,
+            "utilities": 300,
+            "insurance": 300,
+            "otherExpenses": 500,
+            "savings": 300,
+            "retirement": 200,
+            "homeEquity": 15000
+        }
+    },
+    {
+        "id": "low_income",
+        "label": "Financial Stress Case",
+        "description": "Lower income with high fixed costs",
+        "data": {
+            "incomeOwn": 4000,
+            "incomeSpouse": 4500,
+            "childrenCount": 3,
+            "custodyPercentage": 50,
+            "mortgage": 1600,
+            "childcare": 900,
+            "school": 600,
+            "activities": 400,
+            "utilities": 350,
+            "insurance": 300,
+            "otherExpenses": 600,
+            "savings": 100,
+            "retirement": 100,
+            "homeEquity": 10000
+        }
+    }
+]

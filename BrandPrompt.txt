@@ -1,0 +1,42 @@
+BRANDING (STRICTLY FOLLOW):
+
+Brand Name: Costly
+Subtext: Divorce Cost Calculator
+
+Colors:
+- Black: #111111 (Primary)
+- White: #FFFFFF
+- Green: #16A34A (Success)
+- Yellow: #EAB308 (Warning)
+- Red: #DC2626 (Danger)
+
+Typography:
+- Font: Inter (primary)
+
+UI Style:
+- Clean, minimal SaaS (like Stripe)
+- Card-based layout
+- Rounded-2xl
+- Soft shadows
+- Spacious padding (p-6, gap-6)
+
+Buttons:
+- Primary: Black bg, white text
+- Secondary: White bg, black border
+
+Reality Score (VERY IMPORTANT):
+- Large percentage display
+- Color logic:
+  - Green <40%
+  - Yellow 40–70%
+  - Red >70%
+- Must be visually dominant
+
+Mobile:
+- Mobile-first design REQUIRED
+
+Animations:
+- Use Framer Motion (fade, scale, smooth transitions)
+
+Consistency Rule:
+- This design system MUST be reused across ALL UI pages

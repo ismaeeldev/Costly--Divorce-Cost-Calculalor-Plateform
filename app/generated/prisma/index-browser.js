@@ -125,11 +125,21 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  resetToken: 'resetToken',
+  resetTokenExpiry: 'resetTokenExpiry',
+  accessType: 'accessType',
   hasFullAccess: 'hasFullAccess',
   entryPurchased: 'entryPurchased',
+  canUseSubscription: 'canUseSubscription',
+  hasAIAdvisor: 'hasAIAdvisor',
+  subscriptionId: 'subscriptionId',
   subscriptionStatus: 'subscriptionStatus',
   stripeCustomerId: 'stripeCustomerId',
   stripeSubId: 'stripeSubId',
+  assetSplit: 'assetSplit',
+  retirementImpact: 'retirementImpact',
+  vaDisability: 'vaDisability',
+  housingScenario: 'housingScenario',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -152,6 +162,10 @@ exports.Prisma.ScenarioScalarFieldEnum = {
   savings: 'savings',
   retirement: 'retirement',
   homeEquity: 'homeEquity',
+  assetSplit: 'assetSplit',
+  retirementImpact: 'retirementImpact',
+  vaDisability: 'vaDisability',
+  housingScenario: 'housingScenario',
   netIncome: 'netIncome',
   monthlySupport: 'monthlySupport',
   totalExpenses: 'totalExpenses',
@@ -174,11 +188,12 @@ exports.Prisma.AddonScalarFieldEnum = {
 exports.Prisma.PaymentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  stripeSessionId: 'stripeSessionId',
+  stripePaymentId: 'stripePaymentId',
+  stripePriceId: 'stripePriceId',
   amount: 'amount',
   currency: 'currency',
   productType: 'productType',
-  stripeId: 'stripeId',
-  status: 'status',
   createdAt: 'createdAt'
 };
 
@@ -195,6 +210,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -203,6 +223,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.AddonType = exports.$Enums.AddonType = {
   ASSET_SPLIT: 'ASSET_SPLIT',
@@ -213,7 +239,7 @@ exports.AddonType = exports.$Enums.AddonType = {
 
 exports.ProductType = exports.$Enums.ProductType = {
   ENTRY: 'ENTRY',
-  FULL_UNLOCK: 'FULL_UNLOCK',
+  CORE: 'CORE',
   ADDON: 'ADDON',
   SUBSCRIPTION: 'SUBSCRIPTION'
 };
