@@ -20,6 +20,13 @@ if (process.env.SMTP_HOST) {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
+    tls: {
+      // Do not fail on invalid certs - common for some SMTP relays
+      rejectUnauthorized: false,
+    },
+    // Serverless optimization: connection timeout
+    connectionTimeout: 10000, 
+    greetingTimeout: 10000,
   });
 }
 

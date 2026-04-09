@@ -161,10 +161,13 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
             }
         });
 
-        // Fire & Forget email delivery (avoids blocking transaction rollback)
-        sendSetPasswordEmail(customerEmail, resetToken).catch(e => {
+        // AWAIT this for Vercel/Serverless environments to ensure the email is sent
+        // before the lambda execution context is closed.
+        try {
+            await sendSetPasswordEmail(customerEmail, resetToken);
+        } catch (e) {
             console.error("Failed to send set password email during hook execution", e);
-        });
+        }
     }
 
     // Ensure we have the definitive database userId
