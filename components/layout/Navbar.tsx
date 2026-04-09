@@ -24,10 +24,13 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* CENTER: PRICING (Desktop Only to prevent Mobile Overlap) */}
-        <div className="hidden lg:flex flex-1 justify-center">
+        {/* CENTER: NAV LINKS (Desktop Only) */}
+        <div className="hidden lg:flex flex-1 justify-center gap-2">
           <Button variant="ghost" asChild className="text-zinc-500 font-bold hover:text-black hover:bg-zinc-50 rounded-xl px-4 transition-all">
             <Link href="/paywall">Pricing</Link>
+          </Button>
+          <Button variant="ghost" asChild className="text-zinc-500 font-bold hover:text-black hover:bg-zinc-50 rounded-xl px-4 transition-all">
+            <Link href="/contact">Contact</Link>
           </Button>
         </div>
 

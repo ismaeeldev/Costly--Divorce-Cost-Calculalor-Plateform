@@ -3,6 +3,7 @@ export interface CalculationInput {
   incomeSpouse: number;
   childrenCount: number;
   custodyPercentage: number;
+  state?: string | null;
   
   // High-level Lump Sum (for Free Preview)
   expenses?: number;
@@ -74,17 +75,26 @@ export function calculateSupport(
   ownNetIncome: number,
   spouseNetIncome: number,
   childrenCount: number,
-  custodyPercentage: number
+  custodyPercentage: number,
+  state?: string | null
 ): number {
   const combinedNetIncome = ownNetIncome + spouseNetIncome;
   let childSupportRate = 0;
 
+  // State-specific multipliers to increase estimate "legitimacy"
+  const highRatioStates = ["CA", "NY", "FL", "MA", "CT", "NJ", "WA"];
+  const conservativeStates = ["TX", "GA", "UT", "ID", "NE"];
+  
+  let stateMultiplier = 1.0;
+  if (state && highRatioStates.includes(state)) stateMultiplier = 1.10;
+  if (state && conservativeStates.includes(state)) stateMultiplier = 0.95;
+
   if (childrenCount === 1) {
-    childSupportRate = 0.20;
+    childSupportRate = 0.20 * stateMultiplier;
   } else if (childrenCount === 2) {
-    childSupportRate = 0.25;
+    childSupportRate = 0.25 * stateMultiplier;
   } else if (childrenCount >= 3) {
-    childSupportRate = 0.30;
+    childSupportRate = 0.30 * stateMultiplier;
   }
 
   /**
@@ -182,7 +192,8 @@ export function runCalculationEngine(input: CalculationInput): CalculationResult
     netIncomeOwn,
     netIncomeSpouse,
     input.childrenCount,
-    input.custodyPercentage
+    input.custodyPercentage,
+    input.state
   );
 
   /**

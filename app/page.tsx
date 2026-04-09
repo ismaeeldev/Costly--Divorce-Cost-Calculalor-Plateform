@@ -12,8 +12,12 @@ import {
   ShieldCheck,
   Users,
   CheckCircle2,
-  Lock
+  Lock,
+  BrainCircuit,
+  Sparkles,
+  X
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 // Using Lucide icons to avoid any missing imports or issues with the original design logic
 export default function LandingPage() {
@@ -38,13 +42,13 @@ export default function LandingPage() {
 
           <SlideUp yOffset={20} delay={0.1}>
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight max-w-4xl mx-auto leading-[1.1]">
-              See the Real Financial Impact of Divorce — <span className="text-zinc-400">Before It Happens</span>
+              Get Instant Clarity on Your <span className="text-zinc-400">Child Support Liability</span>
             </h1>
           </SlideUp>
 
           <SlideUp yOffset={20} delay={0.2}>
             <p className="mt-6 text-lg md:text-xl text-zinc-600 max-w-2xl mx-auto">
-              Understand child support, expenses, and your future income in minutes. Avoid costly mistakes and make smarter decisions for your future.
+              Calculate your estimated monthly child support in 60 seconds. Unlock full financial modeling for expenses, future income, and scenario testing.
             </p>
           </SlideUp>
 
@@ -52,13 +56,13 @@ export default function LandingPage() {
             <div className="mt-12 flex flex-col sm:flex-row items-center gap-6 justify-center">
               <Button asChild size="lg" className="bg-[#111111] hover:bg-zinc-800 text-white rounded-2xl px-10 h-16 text-sm font-black uppercase tracking-widest w-full sm:w-auto group shadow-2xl shadow-black/10 transition-all active:scale-95">
                 <Link href="/run" className="flex items-center gap-3">
-                  Run My Numbers
+                  Preview My Numbers
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
               <div className="flex items-center gap-2 px-4 py-2 bg-zinc-50 border border-zinc-100 rounded-full">
                 <CheckCircle2 className="w-4 h-4 text-[#16A34A]" />
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">100% Private Engine</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Free Liability Vision</p>
               </div>
             </div>
           </SlideUp>
@@ -102,8 +106,8 @@ export default function LandingPage() {
           <div className="container">
             <SlideUp>
               <div className="text-center max-w-3xl mx-auto mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Clarity in 3 simple steps</h2>
-                <p className="mt-4 text-zinc-600 text-lg">Stop relying on expensive lawyer estimates. Get precise numbers that show you exactly where you stand.</p>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Financial vision in 3 simple steps</h2>
+                <p className="mt-4 text-zinc-600 text-lg">Stop relying on expensive lawyer guesswork. Get precise numbers that show you exactly where you stand.</p>
               </div>
             </SlideUp>
 
@@ -112,55 +116,150 @@ export default function LandingPage() {
                 <div className="w-20 h-20 rounded-3xl bg-zinc-50 border border-zinc-100 shadow-sm flex items-center justify-center mb-8">
                   <Calculator className="w-8 h-8 text-[#111111]" />
                 </div>
-                <h3 className="text-xl font-black uppercase tracking-tight">1. Enter Numbers</h3>
-                <p className="mt-4 text-sm text-zinc-500 font-medium leading-relaxed">Input your income and expenses completely anonymously into our precision engine.</p>
+                <h3 className="text-xl font-black uppercase tracking-tight">1. Enter 3 Metrics</h3>
+                <p className="mt-4 text-sm text-zinc-500 font-medium leading-relaxed">Input your income, custody percentage, and basic expenses into our precision engine.</p>
               </SlideUp>
 
               <SlideUp delay={0.2} className="relative z-10 flex flex-col items-center text-center p-8 rounded-[2.5rem] bg-white border border-zinc-100 hover:border-zinc-300 transition-all shadow-sm hover:shadow-xl hover:-translate-y-1">
                 <div className="w-20 h-20 rounded-3xl bg-zinc-50 border border-zinc-100 flex items-center justify-center mb-8">
                   <Eye className="w-8 h-8 text-[#16A34A]" />
                 </div>
-                <h3 className="text-xl font-black uppercase tracking-tight">2. Real Vision</h3>
-                <p className="mt-4 text-sm text-zinc-500 font-medium leading-relaxed">Instantly view child support estimates and your personalized post-divorce reality score.</p>
+                <h3 className="text-xl font-black uppercase tracking-tight">2. Support Vision</h3>
+                <p className="mt-4 text-sm text-zinc-500 font-medium leading-relaxed">Instantly view your estimated child support obligations — no credit card or login required.</p>
               </SlideUp>
 
               <SlideUp delay={0.3} className="relative z-10 flex flex-col items-center text-center p-8 rounded-[2.5rem] bg-[#111111] text-white transition-all shadow-2xl hover:-translate-y-1">
                 <div className="w-20 h-20 rounded-3xl bg-white/10 border border-white/10 flex items-center justify-center mb-8">
                   <TrendingUp className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-black uppercase tracking-tight">3. Decisive Action</h3>
-                <p className="mt-4 text-sm text-zinc-400 font-medium leading-relaxed">Negotiate with confidence. Use hard data to protect your wealth and your future.</p>
+                <h3 className="text-xl font-black uppercase tracking-tight">3. Full Strategy</h3>
+                <p className="mt-4 text-sm text-zinc-400 font-medium leading-relaxed">Upgrade to unlock scenario modeling, spousal maintenance analysis, and your complete Reality Score.</p>
               </SlideUp>
             </div>
           </div>
         </section>
 
-        {/* BENEFITS SECTION */}
-        <section className="py-24 bg-zinc-50">
+
+
+        {/* PRICING SECTION */}
+        <section className="py-24 bg-white border-t border-zinc-100">
           <div className="container">
             <SlideUp>
-              <div className="max-w-3xl mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">The difference between guessing and knowing</h2>
+              <div className="text-center max-w-3xl mx-auto mb-16">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#16A34A] bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100 mb-6 inline-block">Simple, Transparent Pricing</span>
+                <h2 className="text-3xl md:text-5xl font-black tracking-tight">Choose your path to clarity</h2>
               </div>
             </SlideUp>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                { title: "Avoid costly mistakes", text: "A 10% miscalculation in child support or spousal maintenance could cost you tens of thousands over time. Know your exact liability.", color: "border-[#DC2626]/20 bg-[#DC2626]/5 text-[#DC2626]" },
-                { title: "Scenario Comparison", text: "Model primary custody, joint custody, and different asset split ratios to see how they impact your true bottom line in real time.", color: "border-zinc-200 bg-white text-[#111111]" },
-                { title: "Empower Your Negotiations", text: "Stop relying entirely on your lawyer's guesswork. Walk into mediation with hard numbers and confidence.", color: "border-[#16A34A]/20 bg-[#16A34A]/5 text-[#16A34A]" },
-                { title: "Your 'Reality Score'", text: "Instantly see the critical ratio of your remaining discretionary income after support obligations to ensure you can afford your new life.", color: "border-zinc-200 bg-white text-[#111111]" },
-              ].map((benefit, idx) => (
-                <SlideUp key={idx} delay={0.1 * idx}>
-                  <div className="p-8 rounded-3xl bg-white border border-zinc-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all flex flex-col h-full">
-                    <div className={`w-12 h-12 rounded-xl mb-6 flex items-center justify-center border ${benefit.color}`}>
-                      <CheckCircle2 className="w-6 h-6" />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-3">{benefit.title}</h3>
-                    <p className="text-zinc-500 leading-relaxed">{benefit.text}</p>
+            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {/* FREE */}
+              <SlideUp delay={0.1}>
+                <div className="p-8 rounded-[2rem] border border-zinc-100 bg-white h-full flex flex-col">
+                  <h3 className="text-xl font-black uppercase tracking-tight mb-2">Free Preview</h3>
+                  <div className="flex items-baseline gap-1 mb-6">
+                    <span className="text-4xl font-black">$0</span>
+                    <span className="text-zinc-400 text-sm font-bold uppercase tracking-widest">Forever</span>
                   </div>
-                </SlideUp>
-              ))}
+                  <div className="space-y-4 mb-10 flex-1">
+                    {[
+                      { text: "Child Support Estimate", included: true },
+                      { text: "State-Specific Formulas", included: true },
+                      { text: "Instant Results", included: true },
+                      { text: "Net Income Breakdown", included: false },
+                      { text: "Interactive Dashboard", included: false },
+                      { text: "Reality Risk Score", included: false },
+                    ].map((f, i) => (
+                      <div key={i} className={cn("flex items-center gap-3", !f.included && "opacity-40")}>
+                        {f.included ? (
+                          <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                        ) : (
+                          <X className="w-4 h-4 text-red-500 shrink-0" />
+                        )}
+                        <span className="text-xs font-bold text-zinc-600 uppercase tracking-wide">{f.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Button asChild variant="outline" className="w-full border-zinc-200 hover:bg-zinc-50 rounded-xl h-12 font-black uppercase tracking-widest text-xs">
+                    <Link href="/run">Start Free</Link>
+                  </Button>
+                </div>
+              </SlideUp>
+
+              {/* ENTRY */}
+              <SlideUp delay={0.2}>
+                <div className="p-8 rounded-[2rem] border border-zinc-200 bg-zinc-50/50 h-full flex flex-col relative overflow-hidden">
+                  <div className="absolute top-0 right-0 px-4 py-1 bg-[#16A34A] text-white text-[10px] font-black uppercase tracking-widest rounded-bl-xl">Best for Beginners</div>
+                  <h3 className="text-xl font-black uppercase tracking-tight mb-2">Quick Review</h3>
+                  <div className="flex items-baseline gap-1 mb-6">
+                    <span className="text-4xl font-black">$19</span>
+                    <span className="text-zinc-400 text-sm font-bold uppercase tracking-widest">One-Time</span>
+                  </div>
+                  <div className="space-y-4 mb-10 flex-1">
+                    {[
+                      { text: "Net Income Breakdown", included: true },
+                      { text: "Full Expense Profile", included: true },
+                      { text: "Liability Breakdown", included: true },
+                      { text: "Interative Dashboard", included: false },
+                      { text: "Reality Risk Score", included: false },
+                      { text: "Scenario Comparison", included: false },
+                    ].map((f, i) => (
+                      <div key={i} className={cn("flex items-center gap-3", !f.included && "opacity-40")}>
+                        {f.included ? (
+                          <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                        ) : (
+                          <X className="w-4 h-4 text-red-500 shrink-0" />
+                        )}
+                        <span className="text-xs font-bold text-zinc-600 uppercase tracking-wide">{f.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Button asChild className="w-full bg-[#111111] text-white hover:bg-zinc-800 rounded-xl h-12 font-black uppercase tracking-widest text-xs">
+                    <Link href="/paywall">Unlock Entry</Link>
+                  </Button>
+                </div>
+              </SlideUp>
+
+              {/* CORE */}
+              <SlideUp delay={0.3}>
+                <div className="p-8 rounded-[2rem] border-2 border-[#111111] bg-[#111111] text-white h-full flex flex-col shadow-2xl shadow-black/20 text-white">
+                  <h3 className="text-xl font-black uppercase tracking-tight mb-2">Strategic Unlock</h3>
+                  <div className="flex items-baseline gap-1 mb-6">
+                    <span className="text-4xl font-black">$127</span>
+                    <span className="text-zinc-500 text-sm font-bold uppercase tracking-widest">Full Access</span>
+                  </div>
+                  <div className="space-y-4 mb-10 flex-1">
+                    {[
+                      { text: "Interactive Dashboard", included: true },
+                      { text: "Reality Risk Score", included: true },
+                      { text: "Full Financial Modeling", included: true },
+                      { text: "Scenario Comparison", included: true },
+                      { text: "AI Advisory Access", included: true },
+                      { text: "Unlimited Simulations", included: true },
+                    ].map((f, i) => (
+                      <div key={i} className="flex items-center gap-3">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <span className="text-xs font-bold text-zinc-300 uppercase tracking-wide">{f.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Button asChild className="w-full bg-white text-black hover:bg-zinc-50 rounded-xl h-12 font-black uppercase tracking-widest text-xs transition-colors">
+                    <Link href="/paywall">Get Full Access</Link>
+                  </Button>
+                </div>
+              </SlideUp>
+            </div>
+
+            <div className="mt-16 bg-zinc-50 border border-zinc-200 rounded-[2rem] p-8 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+              <div className="w-16 h-16 rounded-2xl bg-white border border-zinc-200 flex items-center justify-center shrink-0 shadow-sm">
+                <BrainCircuit className="w-8 h-8 text-[#111111]" />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-lg font-black uppercase tracking-tight mb-1">Looking for ongoing AI support?</h4>
+                <p className="text-sm text-zinc-500">After unlocking **Core**, you can subscribe for **$19/month** to access our **AI Strategic Advisor**. Save unlimited scenarios, re-run simulations at any time, and get instant answers to your complex modeling questions.</p>
+              </div>
+              <Button variant="outline" asChild className="border-[#111111] text-[#111111] hover:bg-zinc-100 rounded-xl px-6 h-12 font-black uppercase tracking-widest text-xs whitespace-nowrap">
+                <Link href="/paywall">Learn More</Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -229,25 +328,21 @@ export default function LandingPage() {
               <p className="text-sm font-medium text-zinc-600 text-center md:text-left">
                 &copy; {new Date().getFullYear()} Costly. Financial clarity for your future.
               </p>
-              <p className="text-[13px] mr-6 text-center md:text-right text-zinc-400">
-                𝕯𝖊𝖛𝖊𝖑𝖔𝖕𝖊𝖉 𝖇𝖞 <a href="https://ismaeeldev.netlify.app" target="_blank" rel="noopener noreferrer" style={{ color: "#ff0000", fontWeight: "700" }} className="hover:opacity-80 transition-opacity">𝕸𝖚𝖍𝖆𝖒𝖒𝖆𝖉 𝖎𝖘𝖒𝖆𝖊𝖊𝖑</a>
-              </p>
             </div>
 
             <div className="flex gap-6 text-sm font-medium text-zinc-600">
-              <Link href="#" className="hover:text-black">Privacy</Link>
-              <Link href="#" className="hover:text-black">Terms</Link>
-              <Link href="#" className="hover:text-black">Contact</Link>
+              <Link href="/privacy" className="hover:text-black">Privacy</Link>
+              <Link href="/terms" className="hover:text-black">Terms</Link>
+              <Link href="/contact" className="hover:text-black">Contact</Link>
             </div>
 
           </div>
         </div>
       </footer>
 
-      {/* MOBILE STICKY CTA */}
       <div className="sm:hidden fixed bottom-0 left-0 w-full p-4 bg-white/95 backdrop-blur-sm border-t border-zinc-200 z-50 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.1)]">
         <Button asChild size="lg" className="w-full bg-[#111111] text-white rounded-full h-14 text-lg">
-          <Link href="/run">Run My Numbers</Link>
+          <Link href="/run">Preview My Numbers</Link>
         </Button>
       </div>
     </div>

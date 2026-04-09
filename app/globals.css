@@ -125,12 +125,20 @@
     @apply border-border outline-ring/50;
   }
 
-  body {
-    @apply bg-background text-foreground;
-  }
-
   html {
     @apply font-sans;
+    scrollbar-gutter: stable !important;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    scrollbar-gutter: stable !important;
+  }
+
+  /* Prevent UI 'jumps' when Radix UI / Shadcn components lock the scrollbar */
+  body[style*="overflow: hidden"],
+  body[data-scroll-locked] {
+    padding-right: 0px !important;
   }
 
   button, 
@@ -163,10 +171,6 @@
   background: #e1e1e1;
 }
 
-body {
-  overflow-y: scroll;
-  /* always reserve scrollbar space */
-}
 
 
 

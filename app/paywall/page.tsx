@@ -21,10 +21,12 @@ import {
   CreditCard,
   CheckCircle2,
   LockKeyhole,
-  Info
+  Info,
+  TrendingUp
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { DashboardPreview } from "@/components/dashboard/DashboardPreview";
 
 /**
  * PRODUCTION-GRADE PAYWALL
@@ -160,6 +162,60 @@ function PaywallContent() {
             </p>
           </FadeIn>
         </div>
+
+        {/* STRATEGIC PREVIEW SECTION - NEW */}
+        <FadeIn delay={0.3} className="mb-24">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-4">Your Strategic Command Center</h2>
+            <p className="text-zinc-500 font-bold uppercase tracking-widest text-[10px]">What's waiting behind the lock</p>
+          </div>
+
+          <div className="relative group max-w-5xl mx-auto cursor-default">
+            {/* The Blur/Reveal Effect */}
+            <div className="relative rounded-[3rem] overflow-hidden border border-zinc-100 shadow-2xl transition-all duration-700 group-hover:shadow-[0_40px_100px_rgba(0,0,0,0.1)]">
+              <DashboardPreview isBlurred={true} className="w-full transform transition-all duration-1000 group-hover:blur-sm group-hover:scale-100" />
+              
+              {/* Overlay Content */}
+              <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-white/10 backdrop-blur-[2px] opacity-100 group-hover:opacity-0 transition-opacity duration-500">
+                <div className="p-10 rounded-[2.5rem] bg-white/90 backdrop-blur-md border border-white shadow-2xl text-center max-w-md">
+                   <div className="w-16 h-16 rounded-2xl bg-[#111111] text-white flex items-center justify-center mx-auto mb-6 shadow-xl">
+                      <LockKeyhole className="w-8 h-8" />
+                   </div>
+                   <h3 className="text-2xl font-black mb-3 italic">"Stop Guessing, Start Modeling"</h3>
+                   <p className="text-sm text-zinc-500 font-bold leading-relaxed mb-6">
+                     Access the full interactive engine. Model unlimited scenarios, get your Reality Score, and chat with your AI Strategic Advisor.
+                   </p>
+                   <div className="flex items-center justify-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Secure Access Ready</span>
+                   </div>
+                </div>
+              </div>
+
+              {/* Feature Callouts (Visible on Hover) */}
+              <div className="absolute inset-0 z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                <div className="absolute top-[20%] left-[30%] p-4 bg-white/95 backdrop-blur-md rounded-2xl border border-white shadow-xl max-w-[200px] animate-bounce-slow">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
+                    <span className="text-[9px] font-black uppercase tracking-widest">AI Advisor</span>
+                  </div>
+                  <p className="text-[10px] text-zinc-400 font-bold">Real-time strategic feedback on every scenario change.</p>
+                </div>
+
+                <div className="absolute bottom-[30%] right-[20%] p-4 bg-[#111111]/95 backdrop-blur-md rounded-2xl border border-zinc-800 shadow-xl max-w-[200px] animate-float">
+                  <div className="flex items-center gap-2 mb-1 text-white">
+                    <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
+                    <span className="text-[9px] font-black uppercase tracking-widest">Reality Score</span>
+                  </div>
+                  <p className="text-[10px] text-zinc-400 font-bold">Instantly see if your post-split life is financially sustainable.</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Background Glow */}
+            <div className="absolute -inset-10 bg-emerald-50/50 rounded-full blur-[120px] -z-10 group-hover:bg-emerald-100/50 transition-colors duration-1000" />
+          </div>
+        </FadeIn>
 
         {/* STRATEGIC NOTICE FOR NEW USERS - HIGH IMPORTANCE */}
         <FadeIn delay={0.2} className="mb-16">
@@ -304,9 +360,16 @@ function PaywallContent() {
               className="h-8 w-auto object-contain"
             />
           </div>
-          <div className="text-center md:text-right">
-            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#111111] mb-1">Costly Financial Modeling</p>
-            <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">© 2026 Precise Strategic Engine</p>
+          <div className="text-center md:text-right space-y-4">
+            <div className="flex justify-center md:justify-end gap-6 text-[10px] font-black uppercase tracking-widest text-zinc-400">
+              <Link href="/privacy" className="hover:text-[#111111] transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-[#111111] transition-colors">Terms</Link>
+              <Link href="/contact" className="hover:text-[#111111] transition-colors">Contact</Link>
+            </div>
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#111111] mb-1">Costly Financial Modeling</p>
+              <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">© 2026 Precise Strategic Engine</p>
+            </div>
           </div>
         </div>
       </footer>

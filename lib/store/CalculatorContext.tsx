@@ -20,6 +20,7 @@ export interface CalculatorState {
   homeEquity: number;
   assetsOwn: number;
   assetsSpouse: number;
+  state: string | null;
 }
 
 interface CalculatorContextType {
@@ -47,6 +48,7 @@ const defaultState: CalculatorState = {
   homeEquity: 0,
   assetsOwn: 0,
   assetsSpouse: 0,
+  state: null,
 };
 
 const CalculatorContext = createContext<CalculatorContextType | undefined>(undefined);
