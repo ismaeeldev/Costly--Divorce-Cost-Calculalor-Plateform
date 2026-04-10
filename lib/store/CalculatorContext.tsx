@@ -20,6 +20,8 @@ export interface CalculatorState {
   homeEquity: number;
   assetsOwn: number;
   assetsSpouse: number;
+  assetsMarital: number;
+  spousalSupport: number;
   state: string | null;
 }
 
@@ -48,6 +50,8 @@ const defaultState: CalculatorState = {
   homeEquity: 0,
   assetsOwn: 0,
   assetsSpouse: 0,
+  assetsMarital: 0,
+  spousalSupport: 0,
   state: null,
 };
 

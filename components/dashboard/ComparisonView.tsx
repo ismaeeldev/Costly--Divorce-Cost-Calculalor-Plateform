@@ -129,30 +129,77 @@ export function ComparisonView({
         </div>
 
         {/* Desktop Scenario List */}
-        <div className="hidden lg:flex flex-1 overflow-y-auto p-4 space-y-2 no-scrollbar">
+        <div 
+          className="hidden lg:flex flex-col flex-1 overflow-y-auto px-4 py-6 space-y-3 no-scrollbar bg-gradient-to-b from-transparent to-zinc-50/50"
+          style={{ scrollbarGutter: 'stable' }}
+        >
           {scenarios.map((s, idx) => (
             <motion.button
               key={s.id}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
               onClick={() => onScenarioSelect?.(s.id)}
               className={cn(
-                "w-full p-5 rounded-2xl text-left transition-all duration-300 border flex items-center justify-between group relative overflow-hidden",
+                "w-full p-5 rounded-[1.75rem] text-left transition-all duration-300 border flex flex-col gap-3 group relative overflow-hidden",
                 selectedScenarioId === s.id 
-                  ? "bg-[#111] border-black text-white shadow-2xl scale-[1.02] z-10" 
-                  : "bg-white border-zinc-100 text-zinc-600 hover:border-zinc-300 hover:bg-zinc-50"
+                  ? "bg-[#111] border-black text-white shadow-[0_10px_30px_rgba(0,0,0,0.15)] scale-[1.02] z-10" 
+                  : "bg-white border-zinc-100 text-zinc-600 hover:border-zinc-300 hover:shadow-lg hover:shadow-zinc-200/50"
               )}
             >
-              <div className="flex flex-col gap-1 relative z-10">
-                <span className={cn("text-[8px] font-black uppercase tracking-[0.2em]", selectedScenarioId === s.id ? "text-zinc-500" : "text-zinc-400")}>
-                  Ref ID: {s.id.slice(-4).toUpperCase()}
-                </span>
-                <span className="font-black text-xs sm:text-sm tracking-tight truncate max-w-[170px]">
-                  {s.name}
-                </span>
+              {/* Background Accent for Active */}
+              {selectedScenarioId === s.id && (
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-[40px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+              )}
+
+              <div className="flex flex-col gap-2 relative z-10 w-full">
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2">
+                    <span className={cn(
+                      "text-[8px] font-black uppercase tracking-[0.2em] px-2 py-0.5 rounded-md", 
+                      selectedScenarioId === s.id ? "bg-white/10 text-zinc-400" : "bg-zinc-50 text-zinc-400"
+                    )}>
+                      REF: {s.id.slice(0, 4).toUpperCase()}
+                    </span>
+                    {selectedScenarioId === s.id && (
+                      <div className="flex items-center gap-1">
+                        <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="text-[7px] font-black text-emerald-500 uppercase tracking-widest">Active Model</span>
+                      </div>
+                    )}
+                  </div>
+                  <ChevronRight className={cn(
+                    "w-3.5 h-3.5 transition-all duration-300", 
+                    selectedScenarioId === s.id ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
+                  )} />
+                </div>
+
+                <div className="space-y-0.5">
+                  <span className="font-black text-sm tracking-tight truncate block">
+                    {s.name}
+                  </span>
+                  
+                  {/* DATA PREVIEW ROW */}
+                  <div className={cn(
+                    "flex items-center gap-3 pt-1 border-t transition-colors",
+                    selectedScenarioId === s.id ? "border-white/5" : "border-zinc-50"
+                  )}>
+                    <div className="flex flex-col">
+                       <span className="text-[7px] font-black uppercase tracking-widest opacity-40">Income</span>
+                       <span className={cn("text-[10px] font-black tabular-nums", selectedScenarioId === s.id ? "text-zinc-300" : "text-zinc-900")}>
+                         {currency(s.data.incomeOwn)}
+                       </span>
+                    </div>
+                    <div className="w-px h-4 bg-current opacity-5" />
+                    <div className="flex flex-col">
+                       <span className="text-[7px] font-black uppercase tracking-widest opacity-40">Custody</span>
+                       <span className={cn("text-[10px] font-black tabular-nums", selectedScenarioId === s.id ? "text-zinc-300" : "text-zinc-900")}>
+                         {s.data.custodyPercentage}%
+                       </span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <ChevronRight className={cn("w-4 h-4 transition-all duration-300", selectedScenarioId === s.id ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100")} />
             </motion.button>
           ))}
 
@@ -254,12 +301,20 @@ export function ComparisonView({
                   transition={{ type: "spring", damping: 20, stiffness: 100 }}
                   className="group"
                 >
-                  <Card className="rounded-[2.5rem] md:rounded-[3rem] border border-zinc-100 bg-white shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col h-full ring-1 ring-zinc-50">
-                    <CardHeader className="p-6 md:p-8 pb-4 shrink-0">
-                      <div className="flex justify-between items-center mb-1">
+                  <Card className="rounded-[2.5rem] md:rounded-[3rem] border border-zinc-100 bg-white shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col h-full ring-1 ring-zinc-50 relative group">
+                    {/* Blueprint Visual Layer */}
+                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none group-hover:opacity-[0.05] transition-opacity duration-700" 
+                         style={{ backgroundImage: `radial-gradient(#111 0.5px, transparent 0.5px), radial-gradient(#111 0.5px, transparent 0.5px)`, backgroundSize: '20px 20px', backgroundPosition: '0 0, 10px 10px' }} />
+                    
+                    <CardHeader className="p-6 md:p-8 pb-4 shrink-0 relative z-10">
+                    <div className="flex justify-between items-center mb-1">
                         <div className="flex items-center gap-2">
                           <Database className="w-3.5 h-3.5 text-zinc-300" />
                           <span className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400">Baseline Target Model</span>
+                        </div>
+                        <div className="px-3 py-1 bg-zinc-100 text-zinc-500 rounded-full text-[7px] md:text-[8px] font-black uppercase tracking-widest flex items-center gap-1 border border-zinc-200">
+                           <ShieldCheck className="w-2 h-2" />
+                           Benchmark Verified
                         </div>
                       </div>
                       <CardTitle className="text-xl md:text-2xl font-black text-[#111] tracking-tight truncate">
@@ -273,13 +328,16 @@ export function ComparisonView({
                         "py-10 md:py-12 rounded-[2rem] md:rounded-[2.5rem] border flex flex-col items-center justify-center gap-2 transition-all duration-1000 group-hover:scale-[1.02]",
                         getStatusBorder(baseResults.realityScore), getStatusBg(baseResults.realityScore)
                       )}>
-                        <span className={cn("text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em]", getStatusColor(baseResults.realityScore))}>
-                          {baseResults.realityScoreLabel} Status
-                        </span>
-                        <span className="text-6xl md:text-8xl font-black tracking-tighter text-[#111] tabular-nums">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", getStatusColor(baseResults.realityScore).replace("text-", "bg-"))} />
+                          <span className={cn("text-[9px] md:text-[11px] font-black uppercase tracking-[0.25em]", getStatusColor(baseResults.realityScore))}>
+                            {baseResults.realityScoreLabel} Status
+                          </span>
+                        </div>
+                        <span className="text-6xl md:text-8xl font-black tracking-tighter text-[#111] tabular-nums leading-none">
                           {baseResults.realityScore}<span className="text-3xl md:text-4xl opacity-20">%</span>
                         </span>
-                        <p className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-300 mt-2">Stability Index</p>
+                        <p className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.15em] text-zinc-300 mt-2">Stability Index</p>
                       </div>
 
                       <div className="grid grid-cols-2 gap-3 md:gap-4">

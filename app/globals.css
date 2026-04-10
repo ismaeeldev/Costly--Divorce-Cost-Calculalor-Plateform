@@ -126,12 +126,13 @@
   }
 
   html {
-    @apply font-sans;
+    @apply font-sans h-full antialiased;
     scrollbar-gutter: stable !important;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground h-full;
     scrollbar-gutter: stable !important;
   }
 

@@ -15,6 +15,8 @@ import {
   Lock,
   BrainCircuit,
   Sparkles,
+  LayoutDashboard,
+  Users2,
   X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -92,8 +94,8 @@ export default function LandingPage() {
                 <div className="text-left flex items-start gap-4">
                   <ShieldCheck className="w-10 h-10 text-[#16A34A] shrink-0" />
                   <div>
-                    <p className="font-bold text-lg">Bank-Level Privacy</p>
-                    <p className="text-xs text-zinc-500 font-medium whitespace-nowrap">Your data is never shared</p>
+                    <p className="font-bold text-lg">Industry-Grade Privacy</p>
+                    <p className="text-xs text-zinc-500 font-medium whitespace-nowrap">Secure handling of your data</p>
                   </div>
                 </div>
               </div>
@@ -107,7 +109,7 @@ export default function LandingPage() {
             <SlideUp>
               <div className="text-center max-w-3xl mx-auto mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Financial vision in 3 simple steps</h2>
-                <p className="mt-4 text-zinc-600 text-lg">Stop relying on expensive lawyer guesswork. Get precise numbers that show you exactly where you stand.</p>
+                <p className="mt-4 text-zinc-600 text-lg">Stop relying on expensive lawyer guesswork. Get high-fidelity estimates that show you where you stand.</p>
               </div>
             </SlideUp>
 
@@ -141,7 +143,106 @@ export default function LandingPage() {
 
 
 
-        {/* PRICING SECTION */}
+        {/* THE 4 STRATEGIC PILLARS - NEW ADDITION */}
+        <section className="py-24 bg-zinc-50 border-y border-zinc-100 relative overflow-hidden">
+          {/* Decorative background glow */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-50/40 rounded-full blur-[120px] -z-10" />
+          
+          <div className="container max-w-6xl">
+            <FadeIn>
+              <div className="text-center mb-16">
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-600 mb-4 inline-block">The Strategic Framework</span>
+                <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">4 Pillars of Financial Modeling</h2>
+                <p className="text-zinc-500 max-w-2xl mx-auto font-medium text-lg leading-relaxed">
+                  Go beyond simple liability. Our engine calculates the four core components of a sustainable post-split life.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {/* PILLAR 1 */}
+                <div className="p-8 rounded-[2.5rem] bg-white border border-zinc-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group">
+                   <div className="w-14 h-14 rounded-2xl bg-zinc-50 flex items-center justify-center mb-6 group-hover:bg-emerald-50 transition-colors">
+                      <LayoutDashboard className="w-6 h-6 text-[#111111] group-hover:text-emerald-600" />
+                   </div>
+                   <h4 className="font-black uppercase tracking-tight text-sm mb-3">Asset Split Ratios</h4>
+                   <p className="text-xs text-zinc-500 font-bold leading-relaxed">Model multiple division scenarios for marital assets, home equity, and retirement accounts.</p>
+                </div>
+
+                {/* PILLAR 2 */}
+                <div className="p-8 rounded-[2.5rem] bg-white border border-zinc-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group">
+                   <div className="w-14 h-14 rounded-2xl bg-zinc-50 flex items-center justify-center mb-6 group-hover:bg-emerald-50 transition-colors">
+                      <TrendingUp className="w-6 h-6 text-[#111111] group-hover:text-emerald-600" />
+                   </div>
+                   <h4 className="font-black uppercase tracking-tight text-sm mb-3">Maintenance Risk</h4>
+                   <p className="text-xs text-zinc-500 font-bold leading-relaxed">Analyze spousal support exposure with high-fidelity projections based on income delta.</p>
+                </div>
+
+                {/* PILLAR 3 */}
+                <div className="p-8 rounded-[2.5rem] bg-white border border-zinc-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group">
+                   <div className="w-14 h-14 rounded-2xl bg-zinc-50 flex items-center justify-center mb-6 group-hover:bg-emerald-50 transition-colors">
+                      <Sparkles className="w-6 h-6 text-[#111111] group-hover:text-emerald-600" />
+                   </div>
+                   <h4 className="font-black uppercase tracking-tight text-sm mb-3">Reality Score</h4>
+                   <p className="text-xs text-zinc-500 font-bold leading-relaxed">A proprietary sustainability index that measures your post-split financial survivability.</p>
+                </div>
+
+                {/* PILLAR 4 */}
+                <div className="p-8 rounded-[2.5rem] bg-[#111111] text-white shadow-2xl hover:-translate-y-2 transition-all group">
+                   <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
+                      <Users2 className="w-6 h-6 text-white" />
+                   </div>
+                   <h4 className="font-black uppercase tracking-tight text-sm mb-3">Scenario Tuning</h4>
+                   <p className="text-xs text-zinc-400 font-bold leading-relaxed">Compare 'Current Status' vs 'Ideal Outcome' side-by-side to find your optimal path.</p>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* PRICING LIFECYCLE - NEW ADDITION */}
+        <section className="py-24 bg-white relative overflow-hidden">
+           <div className="container max-w-4xl">
+              <div className="text-center mb-16">
+                 <h2 className="text-3xl font-black tracking-tight mb-4">The Strategic Roadmap</h2>
+                 <p className="text-zinc-400 font-black uppercase tracking-[.3em] text-[10px]">Your 4-Stage Transition to Clarity</p>
+              </div>
+
+              <div className="flex flex-col md:flex-row items-center gap-4 relative">
+                 {/* Step 1 */}
+                 <div className="flex-1 w-full p-6 lg:p-8 rounded-[2rem] bg-zinc-50 border border-zinc-100 text-center">
+                    <span className="text-[10px] font-black text-zinc-400 block mb-2 uppercase tracking-widest">Stage 01</span>
+                    <h5 className="font-black text-sm uppercase">Free Vision</h5>
+                 </div>
+                 <ArrowRight className="hidden md:block w-4 h-4 text-zinc-200" />
+                 
+                 {/* Step 2 */}
+                 <div className="flex-1 w-full p-6 lg:p-8 rounded-[2rem] bg-zinc-50 border border-zinc-100 text-center">
+                    <span className="text-[10px] font-black text-zinc-400 block mb-2 uppercase tracking-widest">Stage 02</span>
+                    <h5 className="font-black text-sm uppercase">Entry Review</h5>
+                 </div>
+                 <ArrowRight className="hidden md:block w-4 h-4 text-zinc-200" />
+
+                 {/* Step 3 */}
+                 <div className="flex-1 w-full p-6 lg:p-8 rounded-[2rem] bg-[#111111] text-white text-center shadow-xl">
+                    <span className="text-[10px] font-black text-zinc-500 block mb-2 uppercase tracking-widest">Stage 03</span>
+                    <h5 className="font-black text-sm uppercase italic underline decoration-emerald-500 decoration-2">Core Strategy</h5>
+                 </div>
+                 <ArrowRight className="hidden md:block w-4 h-4 text-zinc-200" />
+
+                 {/* Step 4 */}
+                 <div className="flex-1 w-full p-6 lg:p-8 rounded-[2rem] bg-zinc-50 border-2 border-dashed border-zinc-200 text-center relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-2">
+                       <Sparkles className="w-3 h-3 text-emerald-500" />
+                    </div>
+                    <span className="text-[10px] font-black text-zinc-400 block mb-2 uppercase tracking-widest">Stage 04</span>
+                    <h5 className="font-black text-sm uppercase">AI Advisory</h5>
+                 </div>
+              </div>
+              <p className="mt-12 text-center text-xs text-zinc-400 font-medium italic">
+                Get started for free, then choose the depth of modeling your settlement requires. AI Advisory available as a focused add-on after Core access.
+              </p>
+           </div>
+        </section>
         <section className="py-24 bg-white border-t border-zinc-100">
           <div className="container">
             <SlideUp>
@@ -269,9 +370,9 @@ export default function LandingPage() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#EAB308]/10 blur-[120px] rounded-full pointer-events-none" />
           <div className="container relative z-10 flex flex-col items-center text-center">
             <Lock className="w-16 h-16 text-zinc-400 mb-8" />
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">Your data is 100% private.</h2>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">Private & Secure.</h2>
             <p className="text-xl text-zinc-400 max-w-2xl mb-12">
-              Costly uses secure encryption. We don't ask for your name or social security number, and your data is never sold.
+              Costly uses industry-standard encryption. We prioritze your anonymity and your data is never sold to third parties.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 opacity-70">
               <div className="text-center">
@@ -283,8 +384,8 @@ export default function LandingPage() {
                 <p className="text-sm font-medium uppercase tracking-wider text-zinc-400">Name Required</p>
               </div>
               <div className="text-center">
-                <p className="text-4xl font-bold mb-2">100%</p>
-                <p className="text-sm font-medium uppercase tracking-wider text-zinc-400">Anonymous</p>
+                <p className="text-4xl font-bold mb-2">Private</p>
+                <p className="text-sm font-medium uppercase tracking-wider text-zinc-400">Previews</p>
               </div>
               <div className="text-center">
                 <p className="text-4xl font-bold mb-2">Delete</p>

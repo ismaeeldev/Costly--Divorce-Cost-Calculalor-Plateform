@@ -473,14 +473,26 @@ export function InteractiveDashboard({
                                  <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
                                     Live Modeling Result
                                  </p>
-
                                  {isCore && (
-                                    <button
-                                       onClick={handleCompare}
-                                       className="text-[12px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full border border-emerald-600 text-emerald-600 hover:border-emerald-500 hover:text-emerald-500 transition-all animate-pulse cursor-pointer"
-                                    >
-                                       Compare
-                                    </button>
+                                    <div className="flex items-center gap-2">
+                                       <button
+                                          onClick={handleCompare}
+                                          className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all cursor-pointer"
+                                       >
+                                          Compare Scenarios
+                                       </button>
+                                       <div className={cn(
+                                          "flex items-center gap-1.5 px-3 py-1 rounded-full border font-black text-[9px] uppercase tracking-widest",
+                                          results.realityScoreStatus === "Green" ? "border-emerald-500/30 text-emerald-500 bg-emerald-500/5" :
+                                          results.realityScoreStatus === "Yellow" ? "border-amber-500/30 text-amber-500 bg-amber-500/5" : "border-rose-500/30 text-rose-500 bg-rose-500/5"
+                                       )}>
+                                          <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", 
+                                             results.realityScoreStatus === "Green" ? "bg-emerald-500" :
+                                             results.realityScoreStatus === "Yellow" ? "bg-amber-500" : "bg-rose-500"
+                                          )} />
+                                          {results.realityScoreLabel}
+                                       </div>
+                                    </div>
                                  )}
                               </div>
                            </div>

@@ -27,6 +27,14 @@ import {
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { DashboardPreview } from "@/components/dashboard/DashboardPreview";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 /**
  * PRODUCTION-GRADE PAYWALL
@@ -38,6 +46,8 @@ function PaywallContent() {
   const searchParams = useSearchParams();
   const user = session?.user as any;
   const [isRedirecting, setIsRedirecting] = useState<string | null>(null);
+  const [isOnboardingModalOpen, setIsOnboardingModalOpen] = useState(false);
+  const [pendingCheckout, setPendingCheckout] = useState<{productType: string, addOnType?: string} | null>(null);
 
   // Parse access levels
   const isEntry = user?.accessType === "ENTRY" || user?.entryPurchased;
@@ -60,6 +70,17 @@ function PaywallContent() {
   }, [searchParams, updateSession]);
 
   async function handleCheckout(productType: string, addOnType?: string) {
+    // SECURITY GUARDRAIL: Only show onboarding to new users (guests)
+    if (!session?.user) {
+      setPendingCheckout({ productType, addOnType });
+      setIsOnboardingModalOpen(true);
+      return;
+    }
+
+    executeCheckout(productType, addOnType);
+  }
+
+  async function executeCheckout(productType: string, addOnType?: string) {
     setIsRedirecting(productType + (addOnType || ""));
     try {
       const response = await fetch("/api/checkout", {
@@ -145,6 +166,60 @@ function PaywallContent() {
     <div className="flex flex-col min-h-screen bg-white text-[#111111] pt-20">
       <Navbar />
 
+      {/* ONBOARDING GUARDRAIL MODAL */}
+      <Dialog open={isOnboardingModalOpen} onOpenChange={setIsOnboardingModalOpen}>
+        <DialogContent className="w-[95vw] sm:w-full lg:max-w-3xl rounded-[2.5rem] p-0 overflow-hidden border-none shadow-[0_40px_100px_rgba(0,0,0,0.2)]">
+          <div className="bg-[#111111] text-white p-10 relative overflow-hidden">
+             {/* Background Decoration */}
+             <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
+             
+             <div className="relative z-10 space-y-6">
+                <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-md flex items-center justify-center">
+                   <Sparkles className="w-8 h-8 text-emerald-400" />
+                </div>
+                <div>
+                   <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500 mb-2">Secure Onboarding</h2>
+                   <DialogTitle className="text-3xl md:text-4xl font-black tracking-tight text-white leading-none">
+                     Welcome — You’re Almost There
+                   </DialogTitle>
+                </div>
+             </div>
+          </div>
+
+          <div className="p-10 bg-white space-y-8">
+             <div className="space-y-6 text-sm text-zinc-600 font-bold leading-relaxed">
+                <div className="flex gap-4">
+                   <div className="w-6 h-6 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center text-[10px] font-black shrink-0">1</div>
+                   <p>Enter the email address you’d like to use for your Costly account on the <span className="text-[#111111]">Stripe checkout page</span>.</p>
+                </div>
+                <div className="flex gap-4">
+                   <div className="w-6 h-6 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center text-[10px] font-black shrink-0">2</div>
+                   <p>Once payment is confirmed, we’ll send a <span className="text-[#111111]">secure setup link</span> to that email instantly.</p>
+                </div>
+                <div className="flex gap-4">
+                   <div className="w-6 h-6 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center text-[10px] font-black shrink-0">3</div>
+                   <p>If you don’t see it in your inbox, please check your <span className="text-emerald-600 underline underline-offset-4">spam or junk folder</span>.</p>
+                </div>
+             </div>
+
+             <DialogFooter className="flex-col sm:flex-row gap-4">
+                <Button 
+                  onClick={() => {
+                    setIsOnboardingModalOpen(false);
+                    if (pendingCheckout) {
+                      executeCheckout(pendingCheckout.productType, pendingCheckout.addOnType);
+                    }
+                  }}
+                  className="w-full h-16 rounded-2xl bg-[#111111] text-white font-black uppercase tracking-widest text-xs shadow-2xl shadow-black/10 transition-all hover:scale-[1.02] active:scale-[0.98] group"
+                >
+                  I Understand, Continue to Checkout
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Button>
+             </DialogFooter>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <main className="flex-1 container max-w-6xl mx-auto px-4 py-16">
 
         {/* HEADER SECTION */}
@@ -227,11 +302,19 @@ function PaywallContent() {
               <Sparkles className="w-6 h-6 animate-spin-slow" />
             </div>
             <div className="relative z-10 text-center md:text-left">
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-[#EAB308] mb-3">Critical Onboarding Instruction</p>
-              <h4 className="text-xl font-black text-[#111111] mb-3 leading-tight">New Users: Read This Before Checkout</h4>
-              <p className="text-sm text-zinc-600 font-bold leading-relaxed">
-                To link your purchase correctly: You <span className="text-[#111111] underline decoration-[#EAB308] underline-offset-4 decoration-2">must enter the exact email address</span> you wish to use for your account on the Stripe checkout page. We will instantly deliver a secure password-setup link to that address once your payment is confirmed. Check your <span className="text-[#EAB308]">spam folder</span> if it doesn't arrive in your main inbox.
-              </p>
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-[#EAB308] mb-3">Onboarding</p>
+              <h4 className="text-xl font-black text-[#111111] mb-3 leading-tight">Welcome — You’re Almost There</h4>
+              <div className="space-y-4 text-sm text-zinc-600 font-bold leading-relaxed">
+                <p>
+                  To make sure your purchase is linked to the right account, please enter the email address you’d like to use for your Costly account on the Stripe checkout page.
+                </p>
+                <p>
+                  Once your payment is confirmed, we’ll send a secure link to that email so you can create your password and get started right away.
+                </p>
+                <p>
+                  If you don’t see the email in your inbox, please check your <span className="text-[#EAB308]">spam or junk folder</span>.
+                </p>
+              </div>
             </div>
           </div>
         </FadeIn>

@@ -45,25 +45,32 @@ export function CalculatorForm() {
   const { data, updateData } = useCalculator();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showEstimate, setShowEstimate] = useState(false);
-  const [result, setResult] = useState<number | null>(null);
+  const [result, setResult] = useState<import("@/lib/calculator").CalculationResult | null>(null);
 
   // Local states for Annual Income display (Context stores Monthly)
   const [incomeOwn, setIncomeOwn] = useState(data.incomeOwn ? data.incomeOwn * 12 : 0);
   const [incomeSpouse, setIncomeSpouse] = useState(data.incomeSpouse ? data.incomeSpouse * 12 : 0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Calculate locally
-    const calculation = runCalculationEngine(data);
-    setResult(calculation.monthlySupport);
+    const promise = new Promise((resolve) => {
+      // Calculate locally
+      const calculation = runCalculationEngine(data);
+      setResult(calculation);
+      setTimeout(() => resolve(calculation), 1500);
+    });
 
-    // Simulate premium SaaS feel
-    setTimeout(() => {
-      setShowEstimate(true);
-      setIsSubmitting(false);
-    }, 1200);
+    toast.promise(promise, {
+      loading: 'Calibrating Strategic Data...',
+      success: 'Analysis Complete. Vision Ready.',
+      error: 'Calculation mismatch. Please verify inputs.',
+    });
+
+    await promise;
+    setShowEstimate(true);
+    setIsSubmitting(false);
   };
 
   const handleIncomeOwnChange = (val: string) => {
@@ -109,17 +116,59 @@ export function CalculatorForm() {
                          Engine Verified: {data.state || "US Default"}
                        </div>
                     </div>
-                    <span className="text-xs font-black uppercase tracking-[0.3em] text-zinc-400">Baseline Monthly Estimate</span>
-                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter text-[#111111]">
-                      {formatter.format(result || 0)}
-                    </h2>
+                    <div className="flex flex-col items-center gap-4">
+                      <span className="text-xs font-black uppercase tracking-[0.3em] text-zinc-400">Baseline Monthly Estimate</span>
+                      <h2 className="text-6xl md:text-8xl font-black tracking-tighter text-[#111111]">
+                        {formatter.format(result?.monthlySupport || 0)}
+                      </h2>
+                    </div>
+
+                    {/* REALITY SCORE INDICATOR - NEW */}
+                    <div className="pt-4 flex flex-col items-center gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className={cn(
+                          "w-3 h-3 rounded-full animate-pulse",
+                          result?.realityScoreStatus === "Green" ? "bg-[#16A34A]" :
+                          result?.realityScoreStatus === "Yellow" ? "bg-[#EAB308]" : "bg-[#DC2626]"
+                        )} />
+                        <span className={cn(
+                          "text-[10px] font-black uppercase tracking-[0.2em]",
+                          result?.realityScoreStatus === "Green" ? "text-[#16A34A]" :
+                          result?.realityScoreStatus === "Yellow" ? "text-[#EAB308]" : "text-[#DC2626]"
+                        )}>
+                          Sustainability: {result?.realityScoreLabel || "Analyzing..."}
+                        </span>
+                      </div>
+                      
+                      <div className="w-full max-w-[280px] h-1.5 bg-zinc-100 rounded-full overflow-hidden">
+                        <div 
+                          className={cn(
+                            "h-full transition-all duration-1000 ease-out rounded-full",
+                            result?.realityScoreStatus === "Green" ? "bg-[#16A34A]" :
+                            result?.realityScoreStatus === "Yellow" ? "bg-[#EAB308]" : "bg-[#DC2626]"
+                          )}
+                          style={{ width: `${result?.realityScore || 0}%` }}
+                        />
+                      </div>
+                      <p className="text-[9px] text-zinc-400 font-bold uppercase tracking-widest italic">
+                        Proprietary Financial Reality Index
+                      </p>
+                    </div>
                   </div>
 
                   {!isPaid && (
-                    <div className="grid grid-cols-2 gap-3 pb-2">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pb-2">
                       <div className="p-4 bg-zinc-50 rounded-2xl border border-zinc-100 flex flex-col items-center justify-center gap-2">
                         <Lock className="w-3.5 h-3.5 text-zinc-300" />
                         <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Net Breakdown</span>
+                      </div>
+                      <div className="p-4 bg-zinc-50 rounded-2xl border border-zinc-100 flex flex-col items-center justify-center gap-2">
+                        <Lock className="w-3.5 h-3.5 text-zinc-300" />
+                        <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Asset Split</span>
+                      </div>
+                      <div className="p-4 bg-zinc-50 rounded-2xl border border-zinc-100 flex flex-col items-center justify-center gap-2">
+                        <Lock className="w-3.5 h-3.5 text-zinc-300" />
+                        <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Maintenance Risk</span>
                       </div>
                       <div className="p-4 bg-zinc-50 rounded-2xl border border-zinc-100 flex flex-col items-center justify-center gap-2">
                         <Lock className="w-3.5 h-3.5 text-zinc-300" />
@@ -295,27 +344,55 @@ export function CalculatorForm() {
               </div>
             </div>
 
-            {/* ROW 5: EXPENSES */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between px-1">
-                <Label htmlFor="expenses" className="text-[10px] font-black uppercase tracking-widest text-zinc-400">
-                  Est. Monthly Expenses Post-Split
-                </Label>
-                <DollarSign className="w-3 h-3 text-zinc-300" />
+            {/* STRATEGIC SCOPE - NEW SECTION */}
+            <div className="pt-4 space-y-6">
+              <div className="flex flex-col gap-1">
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#EAB308]">Strategic Scope</span>
+                <p className="text-[9px] text-zinc-400 font-bold uppercase tracking-widest">Optional: Capture broader context for precise modeling</p>
               </div>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                  <span className="text-xl font-bold text-zinc-400">$</span>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {/* Marital Assets */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between px-1">
+                    <Label htmlFor="assetsMarital" className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Total Marital Assets</Label>
+                    <LayoutDashboard className="w-3 h-3 text-zinc-300" />
+                  </div>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                      <span className="text-xl font-bold text-zinc-400">$</span>
+                    </div>
+                    <Input 
+                      id="assetsMarital"
+                      type="number"
+                      placeholder="0"
+                      className="pl-10 h-16 text-lg font-black bg-zinc-50/50 border-zinc-100 rounded-2xl focus:ring-[#111111] focus:border-[#111111] transition-colors group-hover:bg-zinc-50"
+                      value={data.assetsMarital || ""}
+                      onChange={(e) => updateData({ assetsMarital: Number(e.target.value) })}
+                    />
+                  </div>
                 </div>
-                <Input 
-                  id="expenses"
-                  type="number"
-                  placeholder="0"
-                  className="pl-10 h-16 text-2xl font-black bg-zinc-50/50 border-zinc-100 rounded-2xl focus:ring-[#111111] focus:border-[#111111] transition-colors group-hover:bg-zinc-50"
-                  value={data.expenses || ""}
-                  onChange={(e) => updateData({ expenses: Number(e.target.value) })}
-                  required
-                />
+
+                {/* Spousal Support */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between px-1">
+                    <Label htmlFor="spousalSupport" className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Est. Maintenance</Label>
+                    <TrendingUp className="w-3 h-3 text-zinc-300" />
+                  </div>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                      <span className="text-xl font-bold text-zinc-400">$</span>
+                    </div>
+                    <Input 
+                      id="spousalSupport"
+                      type="number"
+                      placeholder="0"
+                      className="pl-10 h-16 text-lg font-black bg-zinc-50/50 border-zinc-100 rounded-2xl focus:ring-[#111111] focus:border-[#111111] transition-colors group-hover:bg-zinc-50"
+                      value={data.spousalSupport || ""}
+                      onChange={(e) => updateData({ spousalSupport: Number(e.target.value) })}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
