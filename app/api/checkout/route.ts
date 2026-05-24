@@ -21,14 +21,14 @@ export async function POST(req: NextRequest) {
     // 1. Fetch current user state from DB, if logged in
     let user = null;
     if (session?.user?.email) {
-       user = await prisma.user.findUnique({
-         where: { email: session.user.email },
-         select: {
-           id: true,
-           hasFullAccess: true,
-           entryPurchased: true,
-         },
-       });
+      user = await prisma.user.findUnique({
+        where: { email: session.user.email },
+        select: {
+          id: true,
+          hasFullAccess: true,
+          entryPurchased: true,
+        },
+      });
     }
 
     /**
@@ -37,12 +37,12 @@ export async function POST(req: NextRequest) {
      * - Protects the premium tier from direct bypass.
      */
     if ((productType === "SUBSCRIPTION" || productType === "ADDON")) {
-       if (!user || !user.hasFullAccess) {
-         return NextResponse.json(
-           { error: "Core Strategic Unlock is required before accessing Pro features and add-ons. Please log in if you already have Core access." },
-           { status: 403 }
-         );
-       }
+      if (!user || !user.hasFullAccess) {
+        return NextResponse.json(
+          { error: "Core Strategic Unlock is required before accessing Pro features and add-ons. Please log in if you already have Core access." },
+          { status: 403 }
+        );
+      }
     }
 
     if (productType === "ENTRY" && user?.entryPurchased) {
@@ -84,11 +84,11 @@ export async function POST(req: NextRequest) {
         },
       ],
       mode: productType === "SUBSCRIPTION" ? "subscription" : "payment",
-      
+
       // PRODUCTION REDIRECTS:
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/success?productType=${productType}&isNew=${!user}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/paywall?checkout=canceled`,
-      
+
       metadata: {
         productType,
         addOnType: addOnType || "",
@@ -100,10 +100,10 @@ export async function POST(req: NextRequest) {
     };
 
     if (session?.user?.email) {
-       checkoutParams.customer_email = session.user.email;
+      checkoutParams.customer_email = session.user.email;
     }
     if (user?.id) {
-       checkoutParams.client_reference_id = user.id;
+      checkoutParams.client_reference_id = user.id;
     }
 
     const checkoutSession = await stripe.checkout.sessions.create(checkoutParams);

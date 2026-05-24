@@ -914,7 +914,7 @@ export function ScenarioLibrary() {
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                             <div className="space-y-2">
                               <Label className="text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase text-zinc-500 tracking-wider">
-                                Your Income
+                                Monthly Income
                               </Label>
                               <Input
                                 type="number"
@@ -926,7 +926,7 @@ export function ScenarioLibrary() {
                             </div>
                             <div className="space-y-2">
                               <Label className="text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase text-zinc-500 tracking-wider">
-                                Spouse Income
+                                Spouse Monthly Income
                               </Label>
                               <Input
                                 type="number"
@@ -1079,17 +1079,20 @@ export function ScenarioLibrary() {
                                     <Label className="text-[8px] sm:text-[9px] font-black uppercase text-zinc-500">
                                       {a} (%)
                                     </Label>
-                                    <Input
-                                      type="number"
-                                      value={editInputs?.assetSplit?.[a] ?? 0}
-                                      onChange={(e) =>
-                                        updateEditField("assetSplit", {
-                                          ...editInputs.assetSplit,
-                                          [a]: Number(e.target.value),
-                                        })
-                                      }
-                                      className="bg-white rounded-lg sm:rounded-xl h-9 sm:h-10 md:h-11"
-                                    />
+                                    <div className="relative">
+                                      <Input
+                                        type="number"
+                                        value={editInputs?.assetSplit?.[a] ?? 0}
+                                        onChange={(e) =>
+                                          updateEditField("assetSplit", {
+                                            ...editInputs.assetSplit,
+                                            [a]: Number(e.target.value),
+                                          })
+                                        }
+                                        className="bg-white rounded-lg sm:rounded-xl h-9 sm:h-10 md:h-11 pr-7"
+                                      />
+                                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-zinc-400 pointer-events-none">%</span>
+                                    </div>
                                   </div>
                                 ))}
                               </div>
@@ -1147,16 +1150,19 @@ export function ScenarioLibrary() {
                                 <Label className="text-[8px] sm:text-[9px] font-black uppercase text-zinc-500">
                                   Rating (%)
                                 </Label>
-                                <Input
-                                  type="number"
-                                  value={editInputs?.vaDisability?.percentage ?? 0}
-                                  onChange={(e) =>
-                                    updateEditField("vaDisability", {
-                                      percentage: Number(e.target.value),
-                                    })
-                                  }
-                                  className="bg-white rounded-lg sm:rounded-xl h-9 sm:h-10 md:h-11"
-                                />
+                                <div className="relative">
+                                  <Input
+                                    type="number"
+                                    value={editInputs?.vaDisability?.percentage ?? 0}
+                                    onChange={(e) =>
+                                      updateEditField("vaDisability", {
+                                        percentage: Number(e.target.value),
+                                      })
+                                    }
+                                    className="bg-white rounded-lg sm:rounded-xl h-9 sm:h-10 md:h-11 pr-7"
+                                  />
+                                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-zinc-400 pointer-events-none">%</span>
+                                </div>
                               </div>
                             </div>
                           )}

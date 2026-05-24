@@ -280,7 +280,7 @@ export function CalculatorForm() {
             <div className="space-y-3">
               <div className="flex items-center justify-between px-1">
                 <Label htmlFor="incomeOwn" className="text-[10px] font-black uppercase tracking-widest text-zinc-400">
-                  Your Gross Annual Income
+                  Monthly Income
                 </Label>
                 <DollarSign className="w-3 h-3 text-zinc-300" />
               </div>
@@ -304,7 +304,7 @@ export function CalculatorForm() {
             <div className="space-y-3">
               <div className="flex items-center justify-between px-1">
                 <Label htmlFor="incomeSpouse" className="text-[10px] font-black uppercase tracking-widest text-zinc-400">
-                  Spouse's Gross Annual Income
+                  Spouse Monthly Income
                 </Label>
                 <Wallet className="w-3 h-3 text-zinc-300" />
               </div>

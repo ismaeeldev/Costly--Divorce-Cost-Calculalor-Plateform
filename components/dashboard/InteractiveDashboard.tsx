@@ -297,11 +297,11 @@ export function InteractiveDashboard({
                         </div>
                         <div className="grid gap-6">
                            <div className="space-y-2">
-                              <Label className="text-xs font-bold text-zinc-600">Income (Own)</Label>
+                              <Label className="text-xs font-bold text-zinc-600">Monthly Income</Label>
                               <Input type="text" value={formatThousands(inputs.incomeOwn)} onChange={(e) => updateField("incomeOwn", parseThousands(e.target.value))} className="h-11 bg-zinc-50/50 rounded-xl" />
                            </div>
                            <div className="space-y-2">
-                              <Label className="text-xs font-bold text-zinc-600">Income (Spouse)</Label>
+                              <Label className="text-xs font-bold text-zinc-600">Spouse Monthly Income</Label>
                               <Input type="text" value={formatThousands(inputs.incomeSpouse)} onChange={(e) => updateField("incomeSpouse", parseThousands(e.target.value))} className="h-11 bg-zinc-50/50 rounded-xl" />
                            </div>
                            <div className="space-y-6 pt-4">
@@ -400,15 +400,24 @@ export function InteractiveDashboard({
                            <div className="grid md:grid-cols-3 gap-8">
                               <div className="space-y-2">
                                  <Label className="text-[10px] font-black uppercase text-zinc-500">Stocks Allocation (%)</Label>
-                                 <Input type="text" value={formatThousands(inputs.assetSplit?.stocks)} onChange={e => updateField("assetSplit", { ...inputs.assetSplit, stocks: parseThousands(e.target.value) })} className="bg-white rounded-xl h-11" />
+                                 <div className="relative">
+                                    <Input type="text" value={formatThousands(inputs.assetSplit?.stocks)} onChange={e => updateField("assetSplit", { ...inputs.assetSplit, stocks: parseThousands(e.target.value) })} className="bg-white rounded-xl h-11 pr-8" />
+                                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-zinc-400 pointer-events-none">%</span>
+                                 </div>
                               </div>
                               <div className="space-y-2">
                                  <Label className="text-[10px] font-black uppercase text-zinc-500">Bonds Allocation (%)</Label>
-                                 <Input type="text" value={formatThousands(inputs.assetSplit?.bonds)} onChange={e => updateField("assetSplit", { ...inputs.assetSplit, bonds: parseThousands(e.target.value) })} className="bg-white rounded-xl h-11" />
+                                 <div className="relative">
+                                    <Input type="text" value={formatThousands(inputs.assetSplit?.bonds)} onChange={e => updateField("assetSplit", { ...inputs.assetSplit, bonds: parseThousands(e.target.value) })} className="bg-white rounded-xl h-11 pr-8" />
+                                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-zinc-400 pointer-events-none">%</span>
+                                 </div>
                               </div>
                               <div className="space-y-2">
                                  <Label className="text-[10px] font-black uppercase text-zinc-500">Cash Reserves (%)</Label>
-                                 <Input type="text" value={formatThousands(inputs.assetSplit?.cash)} onChange={e => updateField("assetSplit", { ...inputs.assetSplit, cash: parseThousands(e.target.value) })} className="bg-white rounded-xl h-11" />
+                                 <div className="relative">
+                                    <Input type="text" value={formatThousands(inputs.assetSplit?.cash)} onChange={e => updateField("assetSplit", { ...inputs.assetSplit, cash: parseThousands(e.target.value) })} className="bg-white rounded-xl h-11 pr-8" />
+                                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-zinc-400 pointer-events-none">%</span>
+                                 </div>
                               </div>
                            </div>
                         )}
@@ -428,7 +437,10 @@ export function InteractiveDashboard({
                            <div className="max-w-md space-y-2">
                               <Label className="text-[10px] font-black uppercase text-zinc-500">VA Disability Rating (%)</Label>
                               <div className="flex gap-4 items-center">
-                                 <Input type="number" value={inputs.vaDisability?.percentage || ""} onChange={e => updateField("vaDisability", { percentage: Number(e.target.value) })} className="bg-white rounded-xl h-11" />
+                                 <div className="relative w-full max-w-[120px]">
+                                    <Input type="number" value={inputs.vaDisability?.percentage || ""} onChange={e => updateField("vaDisability", { percentage: Number(e.target.value) })} className="bg-white rounded-xl h-11 pr-8" />
+                                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-zinc-400 pointer-events-none">%</span>
+                                 </div>
                                  <span className="text-[11px] font-bold text-zinc-400 italic">Adjusts non-taxable net income.</span>
                               </div>
                            </div>
@@ -652,7 +664,7 @@ export function InteractiveDashboard({
                                        ) : (
                                           <>
                                              <Lock className="w-3.5 h-3.5 opacity-40" />
-                                             Unlock Report — $19
+                                             Subscribe for unlimited revison.
                                           </>
                                        )}
                                     </button>
